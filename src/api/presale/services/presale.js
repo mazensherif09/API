@@ -41,14 +41,19 @@ module.exports = {
     return networks;
   },
   async globelInfo() {
-    const globale = await strapi.entityService.findMany(
+    const globaleInfo = await strapi.entityService.findMany(
       "api::global-information.global-information",
       {
         // @ts-ignore
         populate: "deep",
       }
     );
-    return globale;
+    // @ts-ignore
+    const [fisrtIndex, secindex] = globaleInfo?.components || [];
+    return {
+      ...(fisrtIndex || {}),
+      ...(secindex || {}),
+    };
   },
   async createBonus({ order, user, globel }) {
     const userWillTakeBonus = await strapi.db
@@ -63,6 +68,7 @@ module.exports = {
       order: order.id,
       will_take_bonus: userWillTakeBonus.id,
       owner_order: user.id,
+      mts_bonus,
     };
 
     const bonus = await strapi.entityService.create("api::bonus.bonus", {
@@ -72,7 +78,13 @@ module.exports = {
     });
     return bonus;
   },
-  async collectBonus(id) {  
+  async findbounes(id) {
+    const bonus = await strapi.entityService.findOne("api::bonus.bonus", id, {
+      populate: ["will_take_bonus"],
+    });
+    return bonus;
+  },
+  async collectBonus(id) {
     const bonus = await strapi.entityService.update("api::bonus.bonus", id, {
       data: { isCollected: true },
     });

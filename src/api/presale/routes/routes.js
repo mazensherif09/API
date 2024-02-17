@@ -15,5 +15,10 @@ module.exports = {
       path: "/custom/collectBonus/:id",
       handler: "collectbonus.collectbonus",
     },
+    {
+      method: "GET",
+      path: "/custom/mybalance",
+      handler: "presale.mybalance",
+    },
   ],
 };
