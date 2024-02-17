@@ -2,6 +2,7 @@ module.exports = {
   //start enpoints for users
   creatrorder: async (ctx) => {
     try {
+    
       const { user } = ctx.state;
       const { Qty, network, address } = ctx.request.body;
       if (!Qty || !network || !address) {
@@ -30,9 +31,7 @@ module.exports = {
           },
         }
       );
-      await strapi
-        .service("api::presale.presale")
-        .createBonus({ order, user, globel: globaleinfo });
+      await strapi.service("api::presale.presale").createBonus({ order, user, globel: globaleinfo });
 
       return ctx.send(order);
     } catch (error) {

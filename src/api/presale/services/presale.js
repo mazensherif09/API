@@ -51,7 +51,6 @@ module.exports = {
     return globale;
   },
   async createBonus({ order, user, globel }) {
-    console.log(user.ref);
     const userWillTakeBonus = await strapi.db
       .query("plugin::users-permissions.user")
       .findOne({
@@ -70,6 +69,12 @@ module.exports = {
       data: {
         ...data,
       },
+    });
+    return bonus;
+  },
+  async collectBonus(id) {  
+    const bonus = await strapi.entityService.update("api::bonus.bonus", id, {
+      data: { isCollected: true },
     });
     return bonus;
   },

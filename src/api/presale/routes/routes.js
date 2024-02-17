@@ -10,5 +10,10 @@ module.exports = {
       path: "/custom/createorder",
       handler: "createorder.creatrorder",
     },
+    {
+      method: "GET",
+      path: "/custom/collectBonus/:id",
+      handler: "collectbonus.collectbonus",
+    },
   ],
 };
