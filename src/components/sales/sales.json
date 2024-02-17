@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sales_sales",
+  "info": {
+    "displayName": "sales"
+  },
+  "options": {},
+  "attributes": {
+    "sales": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cards.cards"
+    }
+  }
+}

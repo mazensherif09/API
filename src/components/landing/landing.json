@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_landing_landings",
+  "info": {
+    "displayName": "landing"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "first_line": {
+      "type": "string"
+    },
+    "second_line": {
+      "type": "string"
+    },
+    "main_adderss": {
+      "type": "string"
+    },
+    "main_network": {
+      "type": "string"
+    },
+    "potser": {
+      "allowedTypes": [
+        "images",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

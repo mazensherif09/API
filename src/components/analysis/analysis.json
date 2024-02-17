@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_analysis_analyses",
+  "info": {
+    "displayName": "analysis"
+  },
+  "options": {},
+  "attributes": {
+    "phases": {
+      "displayName": "phases",
+      "type": "component",
+      "repeatable": true,
+      "component": "phases.phases"
+    }
+  }
+}

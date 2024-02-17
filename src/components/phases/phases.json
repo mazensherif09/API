@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_phases_phases",
+  "info": {
+    "displayName": "phases"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "data": {
+      "displayName": "data",
+      "type": "component",
+      "repeatable": true,
+      "component": "data.data"
+    }
+  }
+}
