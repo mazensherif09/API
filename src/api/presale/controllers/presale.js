@@ -13,9 +13,7 @@ module.exports = {
       const wallet = await strapi
         .service("api::presale.presale")
         .finduserWallet(user);
-      const bonus = await strapi
-        .service("api::presale.presale")
-        .finduserBonus(user);
+     
 
       const networks = await strapi
         .service("api::presale.presale")
@@ -35,7 +33,6 @@ module.exports = {
         balance,
         globaleInfo,
         wallet,
-        bonus,
         networks,
       };
 
