@@ -10,21 +10,21 @@ module.exports = {
         .service("api::presale.presale")
         .findbounes(id);
 
-      console.log(1);
+      
 
       if (!checkbonus) {
         return ctx.badRequest();
       }
-      console.log(2);
+     
       if (checkbonus?.will_take_bonus.id !== user.id) {
         console.log(checkbonus?.will_take_bonus.id !== user.id);
         return ctx.badRequest();
       }
-      console.log(3);
+      
       if (checkbonus.isCollected) {
         return ctx.badRequest();
       }
-      console.log(4);
+    
       const bonus = await strapi
         .service("api::presale.presale")
         .collectBonus(id);

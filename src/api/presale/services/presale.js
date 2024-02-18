@@ -24,12 +24,15 @@ module.exports = {
 
     return wallet;
   },
-  async finduserBonus(ctx) {
+  async finduserBonus(ctx, pagenumber) {
+    const offset = (+pagenumber - 1) * 10;
     let bonus = await strapi.db.query("api::bonus.bonus").findMany({
       where: {
         will_take_bonus: ctx.id,
         isCollected: false,
         order: { approve: true },
+        offset,
+        limit: 10,
       },
     });
 
