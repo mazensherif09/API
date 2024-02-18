@@ -6,15 +6,12 @@ module.exports = {
       const globaleInfo = await strapi
         .service("api::presale.presale")
         .globelInfo();
-
       const balance = await strapi
         .service("api::presale.presale")
         .finduserBalance(user);
       const wallet = await strapi
         .service("api::presale.presale")
         .finduserWallet(user);
-     
-
       const networks = await strapi
         .service("api::presale.presale")
         .findNetWorks();
