@@ -49,6 +49,7 @@ module.exports = (plugin) => {
             errormsg.push("email");
           }
         });
+        // @ts-ignore
         errormsg = errormsg.toString().replace(/,/g, " and ") + " araedy exist";
         return ctx.badRequest(errormsg);
       }
