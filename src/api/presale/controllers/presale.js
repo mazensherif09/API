@@ -32,7 +32,6 @@ module.exports = {
         wallet,
         networks,
       };
-
       return ctx.send(data);
     } catch (error) {
       console.log("🚀 ~ presale: ~ error:", error);
