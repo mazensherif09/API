@@ -68,9 +68,6 @@
     "ref": {
       "type": "string"
     },
-    "DOB": {
-      "type": "date"
-    },
     "mobile": {
       "type": "string"
     },
@@ -92,6 +89,9 @@
     "uuid": {
       "type": "customField",
       "customField": "plugin::field-uuid.uuid"
+    },
+    "adderss": {
+      "type": "string"
     }
   }
 }
