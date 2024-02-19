@@ -1,13 +1,15 @@
+const { Createvalidation } = require("../../../services/validation");
+const { orderSchema } = require("../schemas/createOrder");
+
 module.exports = {
   //start enpoints for users
   creatrorder: async (ctx) => {
     try {
       const { user } = ctx.state;
       const { Qty, network, address } = ctx.request.body;
-      if (!Qty || !network || !address) {
-        // handle error massege
-        return ctx.badRequest();
-      }
+
+      const error = await Createvalidation(orderSchema, ctx.request.body);
+
       const globaleinfo = await strapi
         .service("api::presale.presale")
         .globelInfo();
@@ -34,7 +36,8 @@ module.exports = {
 
       return ctx.send(order);
     } catch (error) {
-      return ctx.badRequest();
+      console.log("🚀 ~ creatrorder: ~ error:", error);
+      return ctx.badRequest(error);
     }
   },
 };
