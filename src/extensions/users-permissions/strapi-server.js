@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const { Createvalidation } = require("../../services/validation");
 const userSchema = Joi.object({
-  username: Joi.string().min(3).max(30),
+  username: Joi.string().max(30),
   email: Joi.string().email(),
   mobile: Joi.number().min(8),
 });
