@@ -1,75 +1,73 @@
-// src/extensions/users-permissions/strapi-server.js
-// this route is only allowed for authenticated users
+const Joi = require("joi");
+const { Createvalidation } = require("../../services/validation");
+const userSchema = Joi.object({
+  username: Joi.string().min(3).max(30),
+  email: Joi.string().email(),
+  mobile: Joi.number().min(8),
+});
 
 module.exports = (plugin) => {
   /*******************************  CUSTOM CONTROLERS  ********************************/
   plugin.controllers.user.updateMe = async (ctx) => {
     // 1 vaildate data
-    const { email, username, mobile } = ctx.request.body;
-    const { user } = ctx.state;
-
-    if (!email && !username && !mobile) {
-      return ctx.badRequest("can not update same data");
-    }
-
-    if (email || username) {
-      if (
-        email &&
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-      ) {
-        return ctx.badRequest("email <");
+    try {
+      const { email, username, mobile } = ctx.request.body;
+      const { user } = ctx.state;
+      const { error } = await Createvalidation(userSchema, ctx.request.body);
+      if (error) {
+        return ctx.badRequest(error.details[0].message);
       }
-      if (username?.length < 5) {
-        return ctx.badRequest("username <");
+      if (email || username) {
+        // 2 check unique feilds
+        const checkFeilds = await strapi
+          .query("plugin::users-permissions.user")
+          .findMany({
+            where: {
+              $or: [
+                {
+                  username: username,
+                  id: { $not: user.id },
+                },
+                {
+                  email: email,
+                  id: { $not: user.id },
+                },
+              ],
+            },
+          });
+        if (!!checkFeilds.length) {
+          let errormsg = [];
+          checkFeilds.map((val) => {
+            if (val.username === username) {
+              errormsg.push("username");
+            }
+            if (val.email === email) {
+              errormsg.push("email");
+            }
+          });
+          // @ts-ignore
+          errormsg =
+            errormsg.toString().replace(/,/g, " and ") + " alraedy uses";
+          return ctx.badRequest(errormsg);
+        }
       }
-      // 2 check unique feilds
-      const checkFeilds = await strapi
+      // 4 update data if all things is alright
+      await strapi
         .query("plugin::users-permissions.user")
-        .findMany({
-          where: {
-            $or: [
-              {
-                username: username,
-                id: { $not: user.id },
-              },
-              {
-                email: email,
-                id: { $not: user.id },
-              },
-            ],
+        .update({
+          where: { id: user.id },
+          data: {
+            email,
+            username,
+            mobile,
           },
+        })
+        .then((res) => {
+          return (ctx.response.status = 200);
         });
-      if (!!checkFeilds.length) {
-        let errormsg = [];
-        checkFeilds.map((val) => {
-          if (val.username === username) {
-            errormsg.push("username");
-          }
-          if (val.email === email) {
-            errormsg.push("email");
-          }
-        });
-        // @ts-ignore
-        errormsg = errormsg.toString().replace(/,/g, " and ") + " alraedy uses";
-        return ctx.badRequest(errormsg);
-      }
+    } catch (error) {
+      return ctx.badRequest(error);
     }
-    // 3 sentize data
-    const data = {
-      email,
-      username,
-      mobile,
-    };
-    // 4 update data if all things is alright
-    await strapi
-      .query("plugin::users-permissions.user")
-      .update({
-        where: { id: user.id },
-        data,
-      })
-      .then((res) => {
-        return (ctx.response.status = 200);
-      });
   };
   /*******************************  CUSTOM ROUTES  ********************************/
   plugin.routes["content-api"].routes.push({
