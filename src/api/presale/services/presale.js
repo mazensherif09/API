@@ -28,7 +28,10 @@ module.exports = {
     let bonus = await strapi.entityService.findPage("api::bonus.bonus", {
       page: +page,
       pageSize: 3,
-      filters: { will_take_bonus: user.id },
+      filters: {
+        will_take_bonus: user.id,
+        isCollected: false,
+      },
       sort: { createdAt: "desc" },
     });
 
