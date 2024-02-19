@@ -50,7 +50,7 @@ module.exports = (plugin) => {
           }
         });
         // @ts-ignore
-        errormsg = errormsg.toString().replace(/,/g, " and ") + " araedy exist";
+        errormsg = errormsg.toString().replace(/,/g, " and ") + " alraedy uses";
         return ctx.badRequest(errormsg);
       }
     }
