@@ -1,11 +1,6 @@
-const Joi = require("joi");
 const { Createvalidation } = require("../../services/validation");
-const userSchema = Joi.object({
-  username: Joi.string().min(6).max(30),
-  email: Joi.string().email().min(6).max(30),
-  mobile: Joi.number().min(8).max(20),
-});
- 
+const { userSchema } = require("./userschema");
+
 module.exports = (plugin) => {
   /*******************************  CUSTOM CONTROLERS  ********************************/
   plugin.controllers.user.updateMe = async (ctx) => {
