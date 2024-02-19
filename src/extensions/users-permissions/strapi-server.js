@@ -5,7 +5,7 @@ const userSchema = Joi.object({
   email: Joi.string().email().min(6).max(30),
   mobile: Joi.number().min(8).max(20),
 });
-
+ 
 module.exports = (plugin) => {
   /*******************************  CUSTOM CONTROLERS  ********************************/
   plugin.controllers.user.updateMe = async (ctx) => {
