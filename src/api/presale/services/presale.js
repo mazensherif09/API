@@ -24,16 +24,12 @@ module.exports = {
 
     return wallet;
   },
-  async finduserBonus(ctx, pagenumber) {
-    const offset = (+pagenumber - 1) * 10;
-    let bonus = await strapi.db.query("api::bonus.bonus").findMany({
-      where: {
-        will_take_bonus: ctx.id,
-        isCollected: false,
-        order: { approve: true },
-        offset,
-        limit: 10,
-      },
+  async finduserBonus(user, page) {
+    let bonus = await strapi.entityService.findPage("api::bonus.bonus", {
+      page: +page,
+      pageSize: 3,
+      filters: { will_take_bonus: user.id },
+      sort: { createdAt: "desc" },
     });
 
     return bonus;
@@ -92,5 +88,18 @@ module.exports = {
       data: { isCollected: true },
     });
     return bonus;
+  },
+  async finduserOrder(user, page) {
+    let orders = await strapi.entityService.findPage(
+      "api::mts-user-order.mts-user-order",
+      {
+        page: +page,
+        pageSize: 3,
+        filters: { customer: user.id },
+        sort: { createdAt: "desc" },
+      }
+    );
+
+    return orders;
   },
 };

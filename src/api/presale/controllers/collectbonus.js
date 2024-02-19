@@ -10,8 +10,6 @@ module.exports = {
         .service("api::presale.presale")
         .findbounes(id);
 
-      
-
       if (!checkbonus) {
         return ctx.badRequest();
       }

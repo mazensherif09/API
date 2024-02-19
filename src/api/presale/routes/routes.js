@@ -20,5 +20,15 @@ module.exports = {
       path: "/custom/mybalance",
       handler: "presale.mybalance",
     },
+    {
+      method: "GET",
+      path: "/custom/myorders",
+      handler: "myorder.myorder",
+    },
+    {
+      method: "GET",
+      path: "/custom/mybonus",
+      handler: "mybonus.mybonus",
+    },
   ],
 };
