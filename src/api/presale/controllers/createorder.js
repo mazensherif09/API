@@ -8,8 +8,10 @@ module.exports = {
       const { user } = ctx.state;
       const { Qty, network, address } = ctx.request.body;
 
-      const error = await Createvalidation(orderSchema, ctx.request.body);
-
+      const { error } = await Createvalidation(orderSchema, ctx.request.body);
+      if (error) {
+        return ctx.badRequest(error.details[0].message);
+      }
       const globaleinfo = await strapi
         .service("api::presale.presale")
         .globelInfo();
@@ -36,7 +38,6 @@ module.exports = {
 
       return ctx.send(order);
     } catch (error) {
-      console.log("🚀 ~ creatrorder: ~ error:", error);
       return ctx.badRequest(error);
     }
   },

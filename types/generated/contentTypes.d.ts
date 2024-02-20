@@ -942,6 +942,41 @@ export interface ApiBonusBonus extends Schema.CollectionType {
   };
 }
 
+export interface ApiContactUsFromContactUsFrom extends Schema.CollectionType {
+  collectionName: 'contact_us_froms';
+  info: {
+    singularName: 'contact-us-from';
+    pluralName: 'contact-us-froms';
+    displayName: 'contact-us-from';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    first_name: Attribute.String;
+    last_name: Attribute.String;
+    email: Attribute.Email;
+    mobile: Attribute.String;
+    subject: Attribute.Text;
+    message: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contact-us-from.contact-us-from',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::contact-us-from.contact-us-from',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiGlobalInformationGlobalInformation
   extends Schema.SingleType {
   collectionName: 'global_informations';
@@ -1208,6 +1243,7 @@ declare module '@strapi/types' {
       'plugin::menus.menu': PluginMenusMenu;
       'plugin::menus.menu-item': PluginMenusMenuItem;
       'api::bonus.bonus': ApiBonusBonus;
+      'api::contact-us-from.contact-us-from': ApiContactUsFromContactUsFrom;
       'api::global-information.global-information': ApiGlobalInformationGlobalInformation;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::mts-user-order.mts-user-order': ApiMtsUserOrderMtsUserOrder;
