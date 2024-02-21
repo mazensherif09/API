@@ -30,5 +30,10 @@ module.exports = {
       path: "/custom/mybonus",
       handler: "mybonus.mybonus",
     },
+    {
+      method: "POST",
+      path: "/custom/addWallet",
+      handler: "addwallet.addwallet",
+    },
   ],
 };
