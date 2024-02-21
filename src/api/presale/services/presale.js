@@ -17,9 +17,9 @@ module.exports = {
     }
     return balance;
   },
-  async finduserWallet(ctx) {
+  async finduserWallet(user) {
     let wallet = await strapi.db.query("api::wallet.wallet").findOne({
-      where: { user: ctx.id },
+      where: { user: user.id },
     });
 
     return wallet;
