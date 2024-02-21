@@ -1,8 +1,16 @@
 const Joi = require("joi");
 const userSchema = Joi.object({
-  username: Joi.string().min(6).max(30),
-  email: Joi.string().email().min(6).max(30),
-  mobile: Joi.number().min(8).max(20),
+  username: Joi.string()
+    .min(3)
+    .max(30)
+    .trim()
+    .messages({
+      "string.min": " name must be greater than 3 characters !",
+      "string.max": " name must be less than 30 characters !",
+    })
+    .allow(null),
+  email: Joi.string().email({ tlds: false }),
+  mobile: Joi.string(),
 });
 
 module.exports = { userSchema };

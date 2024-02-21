@@ -46,16 +46,17 @@ module.exports = (plugin) => {
           return ctx.badRequest(errormsg);
         }
       }
+      let data = {
+        email,
+        username,
+        mobile,
+      };
       // 4 update data if all things is alright
       await strapi
         .query("plugin::users-permissions.user")
         .update({
           where: { id: user.id },
-          data: {
-            email,
-            username,
-            mobile,
-          },
+          data,
         })
         .then((res) => {
           return (ctx.response.status = 200);

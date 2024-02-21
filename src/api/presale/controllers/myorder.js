@@ -9,8 +9,8 @@ module.exports = {
       const orders = await strapi
         .service("api::presale.presale")
         .finduserOrder(user, page);
-     
-      return orders;
+
+      return ctx.send(orders);
     } catch (error) {
       return ctx.badRequest();
     }

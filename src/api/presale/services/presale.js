@@ -27,7 +27,7 @@ module.exports = {
   async finduserBonus(user, page) {
     let bonus = await strapi.entityService.findPage("api::bonus.bonus", {
       page: +page,
-      pageSize: 3,
+      pageSize: 10,
       filters: {
         will_take_bonus: user.id,
         isCollected: false,
@@ -97,7 +97,7 @@ module.exports = {
       "api::mts-user-order.mts-user-order",
       {
         page: +page,
-        pageSize: 3,
+        pageSize: 10,
         filters: { customer: user.id },
         sort: { createdAt: "desc" },
       }
