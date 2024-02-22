@@ -6,6 +6,4 @@ const transporter = nodemailer.createTransport({
     pass: "qcnjyqmbxgqleiwk",
   },
 });
-module.exports = {
-  transporter,
-};
+module.exports = { transporter };
