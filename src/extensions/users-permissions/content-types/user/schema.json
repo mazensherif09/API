@@ -92,6 +92,12 @@
     },
     "adderss": {
       "type": "string"
+    },
+    "sessionResetPassword": {
+      "type": "biginteger"
+    },
+    "OTP": {
+      "type": "biginteger"
     }
   }
 }

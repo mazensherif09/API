@@ -1,4 +1,4 @@
-const { Createvalidation } = require("../../services/validation");
+const { Createvalidation } = require("../../services/validation/validation");
 const { userSchema } = require("./userschema");
 
 module.exports = (plugin) => {
@@ -51,6 +51,7 @@ module.exports = (plugin) => {
         username,
         mobile,
       };
+     
       // 4 update data if all things is alright
       await strapi
         .query("plugin::users-permissions.user")
@@ -62,6 +63,7 @@ module.exports = (plugin) => {
           return (ctx.response.status = 200);
         });
     } catch (error) {
+      console.log("🚀 ~ plugin.controllers.user.updateMe= ~ error:", error);
       return ctx.badRequest(error);
     }
   };
