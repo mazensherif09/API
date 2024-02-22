@@ -1,4 +1,4 @@
-const { Createvalidation } = require("../../../services/validation");
+const { Createvalidation } = require("../../../services/validation/validation");
 const { walletSchema } = require("../schemas/walletschema");
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
         );
         return ctx.send(data);
       }
-      //4-else create new wallet 
+      //4-else create new wallet
       //if you want to take this step to the service finduserwallet go and do it
       const data = { network, address, user: user?.id };
       const wallet = await strapi.entityService.create("api::wallet.wallet", {

@@ -780,6 +780,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     uuid: Attribute.UID & Attribute.CustomField<'plugin::field-uuid.uuid'>;
     adderss: Attribute.String;
+    sessionResetPassword: Attribute.BigInteger;
+    OTP: Attribute.BigInteger;
+    lastdateResetPassword: Attribute.BigInteger;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

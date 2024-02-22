@@ -1,6 +1,8 @@
-const { Createvalidation } = require("../../services/validation");
-const { userSchema } = require("./userschema");
-
+const { Createvalidation } = require("../../services/validation/validation");
+const { LoginVal } = require("./schemas/SignInVal");
+const { userSchema } = require("./schemas/userschema");
+const jwt = require("jsonwebtoken");
+const SECRETKEY = process.env.JWT_SECRET;
 module.exports = (plugin) => {
   /*******************************  CUSTOM CONTROLERS  ********************************/
   plugin.controllers.user.updateMe = async (ctx) => {
@@ -46,20 +48,74 @@ module.exports = (plugin) => {
           return ctx.badRequest(errormsg);
         }
       }
+      let data = {
+        email,
+        username,
+        mobile,
+      };
+
       // 4 update data if all things is alright
       await strapi
         .query("plugin::users-permissions.user")
         .update({
           where: { id: user.id },
-          data: {
-            email,
-            username,
-            mobile,
-          },
+          data,
         })
         .then((res) => {
           return (ctx.response.status = 200);
         });
+    } catch (error) {
+      console.log("🚀 ~ plugin.controllers.user.updateMe= ~ error:", error);
+      return ctx.badRequest(error);
+    }
+  };
+  plugin.controllers.user.signIn = async (ctx) => {
+    // 1 vaildate data
+    try {
+      const { password, identifier } = ctx.request.body;
+      const { error } = await Createvalidation(LoginVal, ctx.request.body);
+      if (error) {
+        return ctx.badRequest(error.details[0].message);
+      }
+      const user = await strapi
+        .query("plugin::users-permissions.user")
+        .findOne({
+          where: {
+            $or: [
+              {
+                username: identifier,
+              },
+              {
+                email: identifier,
+              },
+            ],
+          },
+        });
+      if (!user) {
+        return ctx.badRequest("user not found");
+      }
+      const isMatch = await strapi.plugins[
+        "users-permissions"
+      ].services.user.validatePassword(password, user.password);
+      if (!isMatch) {
+        return ctx.badRequest("email or password is incorrect");
+      }
+
+      const data = {
+        sessionResetPassword: Date.now(),
+      };
+      await strapi.query("plugin::users-permissions.user").update({
+        where: { id: user.id },
+        data: { ...data },
+      });
+      const token = jwt.sign({ id: user.id }, SECRETKEY, {
+        expiresIn: "30d",
+      });
+      return ctx.send({
+        status: 200,
+        message: "log in successfully",
+        jwt: token,
+      });
     } catch (error) {
       return ctx.badRequest(error);
     }
@@ -69,6 +125,15 @@ module.exports = (plugin) => {
     method: "PUT",
     path: "/user/me",
     handler: "user.updateMe",
+    config: {
+      prefix: "",
+      policies: [],
+    },
+  });
+  plugin.routes["content-api"].routes.push({
+    method: "POST",
+    path: "/auth/sign-in",
+    handler: "user.signIn",
     config: {
       prefix: "",
       policies: [],
