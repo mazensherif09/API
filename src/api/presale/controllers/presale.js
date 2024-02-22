@@ -12,6 +12,7 @@ module.exports = {
       const wallet = await strapi
         .service("api::presale.presale")
         .finduserWallet(user);
+
       const networks = await strapi
         .service("api::presale.presale")
         .findNetWorks();
