@@ -782,6 +782,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     adderss: Attribute.String;
     sessionResetPassword: Attribute.BigInteger;
     OTP: Attribute.BigInteger;
+    lastdateResetPassword: Attribute.BigInteger;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

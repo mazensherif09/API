@@ -98,6 +98,9 @@
     },
     "OTP": {
       "type": "biginteger"
+    },
+    "lastdateResetPassword": {
+      "type": "biginteger"
     }
   }
 }
