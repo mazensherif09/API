@@ -73,6 +73,7 @@ module.exports = (plugin) => {
     // 1 vaildate data
     try {
       const { password, identifier } = ctx.request.body;
+      console.log(password);
       const { error } = await Createvalidation(LoginVal, ctx.request.body);
       if (error) {
         return ctx.badRequest(error.details[0].message);
