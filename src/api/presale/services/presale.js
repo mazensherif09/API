@@ -20,6 +20,7 @@ module.exports = {
   async finduserWallet(user) {
     let wallet = await strapi.db.query("api::wallet.wallet").findOne({
       where: { user: user.id },
+      populate: ['network']
     });
 
     return wallet;
