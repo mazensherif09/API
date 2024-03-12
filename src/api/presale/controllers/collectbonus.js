@@ -9,13 +9,14 @@ module.exports = {
       const checkbonus = await strapi
         .service("api::presale.presale")
         .findbounes(id);
+      console.log("🚀 ~ collectbonus: ~ checkbonus:", checkbonus);
 
       if (!checkbonus) return ctx.badRequest();
 
       if (checkbonus?.will_take_bonus.id !== user.id) return ctx.badRequest();
 
       if (checkbonus?.isCollected) return ctx.badRequest();
-
+      if (checkbonus?.order?.state !== "transfer completed") return ctx.badRequest();
       const bonus = await strapi
         .service("api::presale.presale")
         .collectBonus(id);

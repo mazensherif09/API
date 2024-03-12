@@ -31,8 +31,10 @@ module.exports = {
       filters: {
         will_take_bonus: user.id,
         isCollected: false,
+        order: { state: "transfer completed" },
       },
       sort: { createdAt: "desc" },
+      populate: ["owner_order"],
     });
 
     return bonus;
@@ -82,7 +84,7 @@ module.exports = {
   },
   async findbounes(id) {
     const bonus = await strapi.entityService.findOne("api::bonus.bonus", id, {
-      populate: ["will_take_bonus"],
+      populate: ["will_take_bonus",  "order"],
     });
     return bonus;
   },
@@ -100,6 +102,7 @@ module.exports = {
         pageSize: 10,
         filters: { customer: user.id },
         sort: { createdAt: "desc" },
+        populate: ["network"],
       }
     );
 
