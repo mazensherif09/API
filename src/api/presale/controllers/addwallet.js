@@ -23,6 +23,7 @@ module.exports = {
           userWallet.id,
           {
             data: { network, address },
+            populate: ["network"],
           }
         );
         return ctx.send(data);
@@ -34,6 +35,7 @@ module.exports = {
         data: {
           ...data,
         },
+        populate: ["network"],
       });
 
       return ctx.send(wallet);
