@@ -38,7 +38,7 @@ module.exports = {
       };
       return ctx.send(data);
     } catch (error) {
-      console.log("🚀 ~ presale: ~ error:", error);
+      
       return ctx.badRequest();
     }
   },
