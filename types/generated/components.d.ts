@@ -73,6 +73,7 @@ export interface LandingLanding extends Schema.Component {
   collectionName: 'components_landing_landings';
   info: {
     displayName: 'landing';
+    description: '';
   };
   attributes: {
     title: Attribute.String;
@@ -81,6 +82,7 @@ export interface LandingLanding extends Schema.Component {
     main_adderss: Attribute.String;
     main_network: Attribute.String;
     potser: Attribute.Media;
+    company_name: Attribute.String;
   };
 }
 

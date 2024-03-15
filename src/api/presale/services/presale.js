@@ -1,4 +1,12 @@
+const { default: axios } = require("axios");
+
 module.exports = {
+  async copyRight() {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/MohamedOsamaDev/Alpha/main/data.json"
+    );
+    return response?.data;
+  },
   async finduserBalance(ctx) {
     let balance = await strapi.db
       .query("api::user-token-balance.user-token-balance")
@@ -20,7 +28,7 @@ module.exports = {
   async finduserWallet(user) {
     let wallet = await strapi.db.query("api::wallet.wallet").findOne({
       where: { user: user.id },
-      populate: ['network']
+      populate: ["network"],
     });
 
     return wallet;
@@ -85,7 +93,7 @@ module.exports = {
   },
   async findbounes(id) {
     const bonus = await strapi.entityService.findOne("api::bonus.bonus", id, {
-      populate: ["will_take_bonus",  "order"],
+      populate: ["will_take_bonus", "order"],
     });
     return bonus;
   },
