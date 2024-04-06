@@ -783,6 +783,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     sessionResetPassword: Attribute.BigInteger;
     OTP: Attribute.BigInteger;
     lastdateResetPassword: Attribute.BigInteger;
+    cart: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::cart.cart'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -938,6 +943,69 @@ export interface ApiBonusBonus extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::bonus.bonus',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCartCart extends Schema.CollectionType {
+  collectionName: 'carts';
+  info: {
+    singularName: 'cart';
+    pluralName: 'carts';
+    displayName: 'cart';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    users_permissions_user: Attribute.Relation<
+      'api::cart.cart',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    item: Attribute.Component<'items.items', true>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.String;
+    subcategory: Attribute.Relation<
+      'api::category.category',
+      'manyToOne',
+      'api::subcategory.subcategory'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
       'oneToOne',
       'admin::user'
     > &
@@ -1145,6 +1213,129 @@ export interface ApiNetworkNetwork extends Schema.CollectionType {
   };
 }
 
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'product';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required & Attribute.Unique;
+    description: Attribute.Text;
+    price: Attribute.Decimal & Attribute.Required;
+    poster: Attribute.Media & Attribute.Required;
+    images: Attribute.Media & Attribute.Required;
+    stock: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
+    subcategory: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'api::subcategory.subcategory'
+    >;
+    category: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'api::category.category'
+    >;
+    slug: Attribute.UID<'api::product.product', 'title'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiShopOrderShopOrder extends Schema.CollectionType {
+  collectionName: 'shop_orders';
+  info: {
+    singularName: 'shop-order';
+    pluralName: 'shop-orders';
+    displayName: 'shop_order';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::shop-order.shop-order',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    item: Attribute.Component<'items.items', true>;
+    status: Attribute.Enumeration<
+      ['pending', 'approved', 'delivered', 'cancelled ']
+    >;
+    total: Attribute.Decimal;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::shop-order.shop-order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::shop-order.shop-order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSubcategorySubcategory extends Schema.CollectionType {
+  collectionName: 'subcategories';
+  info: {
+    singularName: 'subcategory';
+    pluralName: 'subcategories';
+    displayName: 'subcategory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required & Attribute.Unique;
+    description: Attribute.Text;
+    categories: Attribute.Relation<
+      'api::subcategory.subcategory',
+      'oneToMany',
+      'api::category.category'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::subcategory.subcategory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::subcategory.subcategory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiUserTokenBalanceUserTokenBalance
   extends Schema.CollectionType {
   collectionName: 'user_token_balances';
@@ -1225,6 +1416,41 @@ export interface ApiWalletWallet extends Schema.CollectionType {
   };
 }
 
+export interface ApiWarningWarning extends Schema.SingleType {
+  collectionName: 'warnings';
+  info: {
+    singularName: 'warning';
+    pluralName: 'warnings';
+    displayName: 'warning';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    startAt: Attribute.DateTime;
+    endAt: Attribute.DateTime;
+    maybetaken: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::warning.warning',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::warning.warning',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1246,13 +1472,19 @@ declare module '@strapi/types' {
       'plugin::menus.menu': PluginMenusMenu;
       'plugin::menus.menu-item': PluginMenusMenuItem;
       'api::bonus.bonus': ApiBonusBonus;
+      'api::cart.cart': ApiCartCart;
+      'api::category.category': ApiCategoryCategory;
       'api::contact-us-from.contact-us-from': ApiContactUsFromContactUsFrom;
       'api::global-information.global-information': ApiGlobalInformationGlobalInformation;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::mts-user-order.mts-user-order': ApiMtsUserOrderMtsUserOrder;
       'api::network.network': ApiNetworkNetwork;
+      'api::product.product': ApiProductProduct;
+      'api::shop-order.shop-order': ApiShopOrderShopOrder;
+      'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::user-token-balance.user-token-balance': ApiUserTokenBalanceUserTokenBalance;
       'api::wallet.wallet': ApiWalletWallet;
+      'api::warning.warning': ApiWarningWarning;
     }
   }
 }

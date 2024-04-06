@@ -69,6 +69,28 @@ export interface DataData extends Schema.Component {
   };
 }
 
+export interface ItemsItems extends Schema.Component {
+  collectionName: 'components_items_items';
+  info: {
+    displayName: 'items';
+  };
+  attributes: {
+    QTY: Attribute.Integer &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<1>;
+    product: Attribute.Relation<
+      'items.items',
+      'oneToOne',
+      'api::product.product'
+    >;
+  };
+}
+
 export interface LandingLanding extends Schema.Component {
   collectionName: 'components_landing_landings';
   info: {
@@ -159,6 +181,7 @@ declare module '@strapi/types' {
       'cards.cards': CardsCards;
       'contact-us.contact-us': ContactUsContactUs;
       'data.data': DataData;
+      'items.items': ItemsItems;
       'landing.landing': LandingLanding;
       'mts-info.mts-info': MtsInfoMtsInfo;
       'phases.phases': PhasesPhases;
