@@ -7,32 +7,38 @@
 module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
     try {
-      console.log(await strapi.service("api::warn.warn"));
-      // console.log("🚀 ~ return ~ hasWarnning:", hasWarnning)
-      // const hasWarnning = await strapi
-      //   .service("api::warn.warn")
-      //   .hasWarnning();
-      //   if (hasWarnning) {
-      //     if (new Date(hasWarnning?.startAt) < new Date()) {
-      //       return ctx.badRequest({
-      //         message: "server has updates",
-      //         title: hasWarnning?.title,
-      //         description: hasWarnning?.description,
-      //         startAt: hasWarnning?.startAt,
-      //         maybetaken: hasWarnning?.maybetaken,
-      //       });
-      //     } else {
-      //       ctx.hasWarnning = {
-      //         name: "warning",
-      //         message: "server has updates",
-      //         title: hasWarnning?.title,
-      //         description: hasWarnning?.description,
-      //         startAt: hasWarnning?.startAt,
-      //         maybetaken: hasWarnning?.maybetaken,
-      //       };
-      //     }
-      //   }
-        return next();
+      const hasWarnning = await strapi.entityService.findMany(
+        "api::warn.warn",
+        {
+          filters: {
+            publishedAt: {
+              $notNull: true,
+            },
+          },
+        }
+      );
+      
+      if (hasWarnning) {
+        if (new Date(hasWarnning?.startAt) < new Date()) {
+          return ctx.badRequest({
+            message: "server has updates",
+            title: hasWarnning?.title,
+            description: hasWarnning?.description,
+            startAt: hasWarnning?.startAt,
+            maybetaken: hasWarnning?.maybetaken,
+          });
+        } else {
+          ctx.hasWarnning = {
+            name: "warning",
+            message: "server has updates",
+            title: hasWarnning?.title,
+            description: hasWarnning?.description,
+            startAt: hasWarnning?.startAt,
+            maybetaken: hasWarnning?.maybetaken,
+          };
+        }
+      }
+      return next();
     } catch (error) {
       return ctx.badRequest("invaild token");
     }

@@ -1475,6 +1475,7 @@ export interface ApiWarnWarn extends Schema.SingleType {
     singularName: 'warn';
     pluralName: 'warns';
     displayName: 'warn';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1482,8 +1483,8 @@ export interface ApiWarnWarn extends Schema.SingleType {
   attributes: {
     title: Attribute.String & Attribute.Required;
     description: Attribute.Text;
-    startAt: Attribute.DateTime;
-    endAt: Attribute.DateTime;
+    startAt: Attribute.DateTime & Attribute.Required;
+    endAt: Attribute.DateTime & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "warn",
     "pluralName": "warns",
-    "displayName": "warn"
+    "displayName": "warn",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,10 +20,12 @@
       "type": "text"
     },
     "startAt": {
-      "type": "datetime"
+      "type": "datetime",
+      "required": true
     },
     "endAt": {
-      "type": "datetime"
+      "type": "datetime",
+      "required": true
     }
   }
 }
