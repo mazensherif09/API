@@ -4,11 +4,18 @@ export interface AboutAbout extends Schema.Component {
   collectionName: 'components_about_abouts';
   info: {
     displayName: 'about';
+    description: '';
   };
   attributes: {
     title: Attribute.String;
     poster: Attribute.Media;
-    cards: Attribute.Component<'cards.cards', true>;
+    cards: Attribute.Component<'cards.cards', true> &
+      Attribute.SetMinMax<
+        {
+          max: 3;
+        },
+        number
+      >;
   };
 }
 
