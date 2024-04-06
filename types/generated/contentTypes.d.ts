@@ -362,6 +362,333 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiBonusBonus extends Schema.CollectionType {
+  collectionName: 'bonuses';
+  info: {
+    singularName: 'bonus';
+    pluralName: 'bonuses';
+    displayName: 'bonus';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    mts_bonus: Attribute.Integer;
+    will_take_bonus: Attribute.Relation<
+      'api::bonus.bonus',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    owner_order: Attribute.Relation<
+      'api::bonus.bonus',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    isCollected: Attribute.Boolean & Attribute.DefaultTo<false>;
+    order: Attribute.Relation<
+      'api::bonus.bonus',
+      'oneToOne',
+      'api::mts-user-order.mts-user-order'
+    >;
+    uuid: Attribute.UID & Attribute.CustomField<'plugin::field-uuid.uuid'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::bonus.bonus',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::bonus.bonus',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiContactUsFromContactUsFrom extends Schema.CollectionType {
+  collectionName: 'contact_us_froms';
+  info: {
+    singularName: 'contact-us-from';
+    pluralName: 'contact-us-froms';
+    displayName: 'contact-us-from';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    first_name: Attribute.String;
+    last_name: Attribute.String;
+    email: Attribute.Email;
+    mobile: Attribute.String;
+    subject: Attribute.Text;
+    message: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contact-us-from.contact-us-from',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::contact-us-from.contact-us-from',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGlobalInformationGlobalInformation
+  extends Schema.SingleType {
+  collectionName: 'global_informations';
+  info: {
+    singularName: 'global-information';
+    pluralName: 'global-informations';
+    displayName: 'global_information';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    components: Attribute.DynamicZone<
+      ['mts-info.mts-info', 'total-token-sales.total-token-sales']
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::global-information.global-information',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::global-information.global-information',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiHomePageHomePage extends Schema.SingleType {
+  collectionName: 'home_pages';
+  info: {
+    singularName: 'home-page';
+    pluralName: 'home-pages';
+    displayName: 'home_page';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    pages: Attribute.DynamicZone<
+      [
+        'landing.landing',
+        'about.about',
+        'sales.sales',
+        'analysis.analysis',
+        'roadmap.roadmap',
+        'contact-us.contact-us'
+      ]
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::home-page.home-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::home-page.home-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMtsUserOrderMtsUserOrder extends Schema.CollectionType {
+  collectionName: 'mts_user_orders';
+  info: {
+    singularName: 'mts-user-order';
+    pluralName: 'mts-user-orders';
+    displayName: 'mts_user_order';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    customer: Attribute.Relation<
+      'api::mts-user-order.mts-user-order',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    address: Attribute.Text & Attribute.Required;
+    Qty: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    price: Attribute.Float & Attribute.Required;
+    network: Attribute.Relation<
+      'api::mts-user-order.mts-user-order',
+      'oneToOne',
+      'api::network.network'
+    >;
+    approve: Attribute.Boolean & Attribute.DefaultTo<false>;
+    bonus: Attribute.Relation<
+      'api::mts-user-order.mts-user-order',
+      'oneToOne',
+      'api::bonus.bonus'
+    >;
+    state: Attribute.Enumeration<
+      ['pending', 'approved', 'transfer completed', 'canceled']
+    > &
+      Attribute.DefaultTo<'pending'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mts-user-order.mts-user-order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mts-user-order.mts-user-order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNetworkNetwork extends Schema.CollectionType {
+  collectionName: 'networks';
+  info: {
+    singularName: 'network';
+    pluralName: 'networks';
+    displayName: 'network';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    adderss: Attribute.Text & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::network.network',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::network.network',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiUserTokenBalanceUserTokenBalance
+  extends Schema.CollectionType {
+  collectionName: 'user_token_balances';
+  info: {
+    singularName: 'user-token-balance';
+    pluralName: 'user-token-balances';
+    displayName: 'user_token_balance';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    token_balance: Attribute.Integer & Attribute.DefaultTo<0>;
+    USDT_balance: Attribute.Decimal & Attribute.DefaultTo<0>;
+    ETH_balance: Attribute.Decimal & Attribute.DefaultTo<0>;
+    BTC_balance: Attribute.Decimal & Attribute.DefaultTo<0>;
+    user: Attribute.Relation<
+      'api::user-token-balance.user-token-balance',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    uuid: Attribute.UID & Attribute.CustomField<'plugin::field-uuid.uuid'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-token-balance.user-token-balance',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-token-balance.user-token-balance',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiWalletWallet extends Schema.CollectionType {
+  collectionName: 'wallets';
+  info: {
+    singularName: 'wallet';
+    pluralName: 'wallets';
+    displayName: 'wallet';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    address: Attribute.Text;
+    network: Attribute.Relation<
+      'api::wallet.wallet',
+      'oneToOne',
+      'api::network.network'
+    >;
+    user: Attribute.Relation<
+      'api::wallet.wallet',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::wallet.wallet',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::wallet.wallet',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -950,69 +1277,6 @@ export interface ApiBonusBonus extends Schema.CollectionType {
   };
 }
 
-export interface ApiCartCart extends Schema.CollectionType {
-  collectionName: 'carts';
-  info: {
-    singularName: 'cart';
-    pluralName: 'carts';
-    displayName: 'cart';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    users_permissions_user: Attribute.Relation<
-      'api::cart.cart',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    item: Attribute.Component<'items.items', true>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiCategoryCategory extends Schema.CollectionType {
-  collectionName: 'categories';
-  info: {
-    singularName: 'category';
-    pluralName: 'categories';
-    displayName: 'category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String;
-    description: Attribute.String;
-    subcategory: Attribute.Relation<
-      'api::category.category',
-      'manyToOne',
-      'api::subcategory.subcategory'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::category.category',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::category.category',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiContactUsFromContactUsFrom extends Schema.CollectionType {
   collectionName: 'contact_us_froms';
   info: {
@@ -1213,182 +1477,6 @@ export interface ApiNetworkNetwork extends Schema.CollectionType {
   };
 }
 
-export interface ApiNewInNewIn extends Schema.SingleType {
-  collectionName: 'new_ins';
-  info: {
-    singularName: 'new-in';
-    pluralName: 'new-ins';
-    displayName: 'new In ';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    poster: Attribute.Media & Attribute.Required;
-    title: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::new-in.new-in',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::new-in.new-in',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProductProduct extends Schema.CollectionType {
-  collectionName: 'products';
-  info: {
-    singularName: 'product';
-    pluralName: 'products';
-    displayName: 'product';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String & Attribute.Required & Attribute.Unique;
-    description: Attribute.Text;
-    price: Attribute.Decimal & Attribute.Required;
-    poster: Attribute.Media & Attribute.Required;
-    images: Attribute.Media & Attribute.Required;
-    stock: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
-    subcategory: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'api::subcategory.subcategory'
-    >;
-    category: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'api::category.category'
-    >;
-    slug: Attribute.UID<'api::product.product', 'title'> & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiShopShop extends Schema.SingleType {
-  collectionName: 'shops';
-  info: {
-    singularName: 'shop';
-    pluralName: 'shops';
-    displayName: 'shop';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    images: Attribute.Media & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::shop.shop', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::shop.shop', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiShopOrderShopOrder extends Schema.CollectionType {
-  collectionName: 'shop_orders';
-  info: {
-    singularName: 'shop-order';
-    pluralName: 'shop-orders';
-    displayName: 'shop_order';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    user: Attribute.Relation<
-      'api::shop-order.shop-order',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    item: Attribute.Component<'items.items', true>;
-    status: Attribute.Enumeration<
-      ['pending', 'approved', 'delivered', 'cancelled ']
-    >;
-    total: Attribute.Decimal;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::shop-order.shop-order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::shop-order.shop-order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiSubcategorySubcategory extends Schema.CollectionType {
-  collectionName: 'subcategories';
-  info: {
-    singularName: 'subcategory';
-    pluralName: 'subcategories';
-    displayName: 'subcategory';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String & Attribute.Required & Attribute.Unique;
-    description: Attribute.Text;
-    categories: Attribute.Relation<
-      'api::subcategory.subcategory',
-      'oneToMany',
-      'api::category.category'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::subcategory.subcategory',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::subcategory.subcategory',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiUserTokenBalanceUserTokenBalance
   extends Schema.CollectionType {
   collectionName: 'user_token_balances';
@@ -1469,41 +1557,6 @@ export interface ApiWalletWallet extends Schema.CollectionType {
   };
 }
 
-export interface ApiWarningWarning extends Schema.SingleType {
-  collectionName: 'warnings';
-  info: {
-    singularName: 'warning';
-    pluralName: 'warnings';
-    displayName: 'warning';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String;
-    description: Attribute.Text;
-    startAt: Attribute.DateTime;
-    endAt: Attribute.DateTime;
-    maybetaken: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::warning.warning',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::warning.warning',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1514,6 +1567,14 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::bonus.bonus': ApiBonusBonus;
+      'api::contact-us-from.contact-us-from': ApiContactUsFromContactUsFrom;
+      'api::global-information.global-information': ApiGlobalInformationGlobalInformation;
+      'api::home-page.home-page': ApiHomePageHomePage;
+      'api::mts-user-order.mts-user-order': ApiMtsUserOrderMtsUserOrder;
+      'api::network.network': ApiNetworkNetwork;
+      'api::user-token-balance.user-token-balance': ApiUserTokenBalanceUserTokenBalance;
+      'api::wallet.wallet': ApiWalletWallet;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -1525,21 +1586,13 @@ declare module '@strapi/types' {
       'plugin::menus.menu': PluginMenusMenu;
       'plugin::menus.menu-item': PluginMenusMenuItem;
       'api::bonus.bonus': ApiBonusBonus;
-      'api::cart.cart': ApiCartCart;
-      'api::category.category': ApiCategoryCategory;
       'api::contact-us-from.contact-us-from': ApiContactUsFromContactUsFrom;
       'api::global-information.global-information': ApiGlobalInformationGlobalInformation;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::mts-user-order.mts-user-order': ApiMtsUserOrderMtsUserOrder;
       'api::network.network': ApiNetworkNetwork;
-      'api::new-in.new-in': ApiNewInNewIn;
-      'api::product.product': ApiProductProduct;
-      'api::shop.shop': ApiShopShop;
-      'api::shop-order.shop-order': ApiShopOrderShopOrder;
-      'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::user-token-balance.user-token-balance': ApiUserTokenBalanceUserTokenBalance;
       'api::wallet.wallet': ApiWalletWallet;
-      'api::warning.warning': ApiWarningWarning;
     }
   }
 }
