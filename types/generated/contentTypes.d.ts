@@ -1469,6 +1469,31 @@ export interface ApiWalletWallet extends Schema.CollectionType {
   };
 }
 
+export interface ApiWarnWarn extends Schema.SingleType {
+  collectionName: 'warns';
+  info: {
+    singularName: 'warn';
+    pluralName: 'warns';
+    displayName: 'warn';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    startAt: Attribute.DateTime;
+    endAt: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::warn.warn', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::warn.warn', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1504,6 +1529,7 @@ declare module '@strapi/types' {
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::user-token-balance.user-token-balance': ApiUserTokenBalanceUserTokenBalance;
       'api::wallet.wallet': ApiWalletWallet;
+      'api::warn.warn': ApiWarnWarn;
     }
   }
 }

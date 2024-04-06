@@ -11,7 +11,6 @@ module.exports = {
         }
       );
 
-      console.log();
       const copyrights =
         (await strapi.service("api::presale.presale").copyRight()) || {};
       if (!copyrights?.status) return ctx.badRequest("your get blockd");

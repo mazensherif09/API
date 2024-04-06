@@ -8,12 +8,12 @@ module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
     try {
       const hasWarnning = await strapi
-        .service("api::warning.warning")
+        .service("api::api::warn.warn")
         .hasWarnning();
       if (hasWarnning) {
         if (new Date(hasWarnning.startAt) < new Date()) {
           return ctx.badRequest({
-            message: "server have updates",
+            message: "server has updates",
             title: hasWarnning?.title,
             description: hasWarnning?.description,
             startAt: hasWarnning?.startAt,
@@ -22,7 +22,7 @@ module.exports = (config, { strapi }) => {
         } else {
           ctx.hasWarnning = {
             name: "warning",
-            message: "server have updates",
+            message: "server has updates",
             title: hasWarnning?.title,
             description: hasWarnning?.description,
             startAt: hasWarnning?.startAt,

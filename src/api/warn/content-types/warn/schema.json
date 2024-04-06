@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "warns",
+  "info": {
+    "singularName": "warn",
+    "pluralName": "warns",
+    "displayName": "warn"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "startAt": {
+      "type": "datetime"
+    },
+    "endAt": {
+      "type": "datetime"
+    }
+  }
+}
