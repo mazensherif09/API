@@ -1213,6 +1213,37 @@ export interface ApiNetworkNetwork extends Schema.CollectionType {
   };
 }
 
+export interface ApiNewInNewIn extends Schema.SingleType {
+  collectionName: 'new_ins';
+  info: {
+    singularName: 'new-in';
+    pluralName: 'new-ins';
+    displayName: 'new In ';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    poster: Attribute.Media & Attribute.Required;
+    title: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::new-in.new-in',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::new-in.new-in',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiProductProduct extends Schema.CollectionType {
   collectionName: 'products';
   info: {
@@ -1256,6 +1287,28 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiShopShop extends Schema.SingleType {
+  collectionName: 'shops';
+  info: {
+    singularName: 'shop';
+    pluralName: 'shops';
+    displayName: 'shop';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    images: Attribute.Media & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::shop.shop', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::shop.shop', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1479,7 +1532,9 @@ declare module '@strapi/types' {
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::mts-user-order.mts-user-order': ApiMtsUserOrderMtsUserOrder;
       'api::network.network': ApiNetworkNetwork;
+      'api::new-in.new-in': ApiNewInNewIn;
       'api::product.product': ApiProductProduct;
+      'api::shop.shop': ApiShopShop;
       'api::shop-order.shop-order': ApiShopOrderShopOrder;
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::user-token-balance.user-token-balance': ApiUserTokenBalanceUserTokenBalance;
