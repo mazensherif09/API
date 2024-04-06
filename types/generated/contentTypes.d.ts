@@ -1469,41 +1469,6 @@ export interface ApiWalletWallet extends Schema.CollectionType {
   };
 }
 
-export interface ApiWarningWarning extends Schema.SingleType {
-  collectionName: 'warnings';
-  info: {
-    singularName: 'warning';
-    pluralName: 'warnings';
-    displayName: 'warning';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String;
-    description: Attribute.Text;
-    startAt: Attribute.DateTime;
-    endAt: Attribute.DateTime;
-    maybetaken: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::warning.warning',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::warning.warning',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1539,7 +1504,6 @@ declare module '@strapi/types' {
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::user-token-balance.user-token-balance': ApiUserTokenBalanceUserTokenBalance;
       'api::wallet.wallet': ApiWalletWallet;
-      'api::warning.warning': ApiWarningWarning;
     }
   }
 }
