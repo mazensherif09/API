@@ -5,7 +5,7 @@ module.exports = {
     const response = await axios.get(
       "https://raw.githubusercontent.com/MohamedOsamaDev/Alpha/main/data.json"
     );
-    return response?.data;
+    return response?.data || {};
   },
   async finduserBalance(ctx) {
     let balance = await strapi.db

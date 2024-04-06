@@ -31,3 +31,25 @@ module.exports = {
     });
   },
 };
+/*
+server {
+    listen 80; # Listen on port 80 (or your desired port)
+    server_name 45.133.178.90; 
+
+    location / {
+        proxy_pass http://127.0.0.1:1337; 
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        try_files $uri $uri/ =404;
+    }
+}
+
+
+
+*/

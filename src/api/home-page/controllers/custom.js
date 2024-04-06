@@ -11,21 +11,13 @@ module.exports = {
         }
       );
 
-      const copyrights = await strapi
-        .service("api::presale.presale")
-        .copyRight();
-      console.log("🚀 ~ homePage: ~ copyrights:", copyrights)
+      const copyrights = await (await strapi.service("api::presale.presale").copyRight()) || {};
       if (!copyrights?.status) return ctx.badRequest("your get blockd");
-      let data = [...result?.pages, copyrights];
+      let data = [copyrights];
+      if (result) data = [...result?.pages, copyrights];
       return ctx.send({ data });
     } catch (error) {
-      console.log("🚀 ~ homePage: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
 };
-
-
-
-
-
