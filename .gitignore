@@ -109,4 +109,5 @@ exports
 dist
 build
 config/server.js
+server.js
 .strapi-updater.json
