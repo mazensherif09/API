@@ -1,7 +1,8 @@
 {
   "collectionName": "components_landing_landings",
   "info": {
-    "displayName": "landing"
+    "displayName": "landing",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -21,12 +22,16 @@
       "type": "string"
     },
     "potser": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "videos"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "company_name": {
+      "type": "string"
     }
   }
 }

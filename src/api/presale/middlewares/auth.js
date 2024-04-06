@@ -9,6 +9,11 @@ const SECRETKEY = process.env.JWT_SECRET;
 module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
     try {
+      // const copyrights = await strapi
+      //   .service("api::presale.presale")
+      //   .copyRight();
+      // console.log("🚀 ~ return ~ copyrights:", copyrights);
+      // if (copyrights?.status) return ctx.badRequest("invaild token");
       const { user } = ctx.state;
       let [schema, token] = ctx?.request?.header?.authorization?.split(" ");
       const decoded = await jwt.verify(token, SECRETKEY);
