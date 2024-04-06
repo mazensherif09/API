@@ -108,6 +108,10 @@ exports
 .strapi
 dist
 build
+.strapi-updater.json
+
+############################
+# for production use
+############################
 config/server.js
 server.js
-.strapi-updater.json
