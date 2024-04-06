@@ -113,5 +113,5 @@ build
 ############################
 # for production use
 ############################
-# config/server.js
+config/server.js
 server.js
