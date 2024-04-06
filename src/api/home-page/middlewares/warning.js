@@ -7,9 +7,10 @@
 module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
     try {
+      console.log(await strapi.service("api::warn.warn"));
       // console.log("🚀 ~ return ~ hasWarnning:", hasWarnning)
       // const hasWarnning = await strapi
-      //   .service("api::api::warn.warn")
+      //   .service("api::warn.warn")
       //   .hasWarnning();
       //   if (hasWarnning) {
       //     if (new Date(hasWarnning?.startAt) < new Date()) {
