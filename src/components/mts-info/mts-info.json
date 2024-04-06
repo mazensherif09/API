@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_mts_info_mts_infos",
+  "info": {
+    "displayName": "mts_info",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "stage": {
+      "type": "integer"
+    },
+    "stage_state": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "completed"
+      ]
+    },
+    "mts_USD": {
+      "type": "float"
+    },
+    "mts_USDT": {
+      "type": "float"
+    },
+    "bonus_percentage": {
+      "type": "integer",
+      "min": 0,
+      "max": 100
+    }
+  }
+}

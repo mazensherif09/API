@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mts_user_orders",
+  "info": {
+    "singularName": "mts-user-order",
+    "pluralName": "mts-user-orders",
+    "displayName": "mts_user_order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "customer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "address": {
+      "type": "text",
+      "unique": false,
+      "required": true
+    },
+    "Qty": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "price": {
+      "type": "float",
+      "required": true
+    },
+    "network": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::network.network"
+    },
+    "approve": {
+      "type": "boolean",
+      "default": false
+    },
+    "bonus": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::bonus.bonus",
+      "inversedBy": "order"
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "transfer completed",
+        "canceled"
+      ],
+      "default": "pending"
+    }
+  }
+}

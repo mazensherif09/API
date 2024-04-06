@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_token_balances",
+  "info": {
+    "singularName": "user-token-balance",
+    "pluralName": "user-token-balances",
+    "displayName": "user_token_balance",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "token_balance": {
+      "type": "integer",
+      "default": 0
+    },
+    "USDT_balance": {
+      "type": "decimal",
+      "default": 0
+    },
+    "ETH_balance": {
+      "type": "decimal",
+      "default": 0
+    },
+    "BTC_balance": {
+      "type": "decimal",
+      "default": 0
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "balance"
+    },
+    "uuid": {
+      "type": "customField",
+      "customField": "plugin::field-uuid.uuid"
+    }
+  }
+}

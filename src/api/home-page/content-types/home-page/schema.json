@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "home_page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pages": {
+      "type": "dynamiczone",
+      "components": [
+        "landing.landing",
+        "about.about",
+        "sales.sales",
+        "analysis.analysis",
+        "roadmap.roadmap",
+        "contact-us.contact-us"
+      ]
+    }
+  }
+}

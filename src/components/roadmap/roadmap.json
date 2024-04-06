@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_roadmap_roadmaps",
+  "info": {
+    "displayName": "roadmap"
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cards.cards"
+    }
+  }
+}

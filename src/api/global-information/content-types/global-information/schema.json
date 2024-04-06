@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_informations",
+  "info": {
+    "singularName": "global-information",
+    "pluralName": "global-informations",
+    "displayName": "global_information",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "components": {
+      "type": "dynamiczone",
+      "components": [
+        "mts-info.mts-info",
+        "total-token-sales.total-token-sales"
+      ]
+    }
+  }
+}

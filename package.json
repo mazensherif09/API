@@ -1,0 +1,45 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "dev": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@offset-dev/strapi-calendar": "^0.1.1",
+    "@strapi/plugin-cloud": "4.20.1",
+    "@strapi/plugin-color-picker": "^4.20.1",
+    "@strapi/plugin-i18n": "4.20.1",
+    "@strapi/plugin-users-permissions": "4.20.1",
+    "@strapi/provider-email-sendgrid": "^4.20.2",
+    "@strapi/strapi": "4.20.1",
+    "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "joi": "^17.12.1",
+    "mysql": "2.18.1",
+    "nodemailer": "^6.9.9",
+    "npm": "^10.5.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "5.3.4",
+    "strapi-auto-uuid": "^0.0.8",
+    "strapi-plugin-menus": "^1.6.1",
+    "strapi-plugin-populate-deep": "^3.0.1",
+    "styled-components": "5.3.3"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "d0460ad2-63d3-48a0-af00-037befb6a2ab"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
