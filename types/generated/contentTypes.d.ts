@@ -1297,6 +1297,7 @@ export interface ApiShopShop extends Schema.SingleType {
     singularName: 'shop';
     pluralName: 'shops';
     displayName: 'shop';
+    description: '';
   };
   options: {
     draftAndPublish: true;
