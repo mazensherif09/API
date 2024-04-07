@@ -16,8 +16,7 @@ module.exports = (config, { strapi }) => {
             },
           },
         }
-      );
-      
+      ); 
       if (hasWarnning) {
         if (new Date(hasWarnning?.startAt) < new Date()) {
           return ctx.badRequest({
