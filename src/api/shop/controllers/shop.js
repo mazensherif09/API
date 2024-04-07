@@ -2,7 +2,14 @@ module.exports = {
   //start enpoints for users
   shopPage: async (ctx) => {
     try {
-      const slider = await strapi.entityService.findMany("api::shop.shop");
+      const slider = await strapi.entityService.findMany("api::shop.shop",{
+        populate: {
+          images: {
+            fields: ["url"],
+          },
+      }
+    }
+  );
       const newIn = await strapi.entityService.findMany("api::new-in.new-in");
       const sliderCards = await strapi.entityService.findMany(
         "api::product.product",
