@@ -9,7 +9,7 @@ module.exports = {
         where: { slug },
         populate: {
           images: {
-            select: ["url"],
+            select: ["url",'id'],
           },
         },
       });

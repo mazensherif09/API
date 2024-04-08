@@ -47,7 +47,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url"],
+                      fields: ["url",'id'],
                     },
                   },
                 },
@@ -95,7 +95,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url"],
+                    fields: ["url",'id'],
                   },
                 },
               },
@@ -141,7 +141,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    select: ["url"],
+                    select: ["url",'id'],
                   },
                 },
               },
@@ -161,7 +161,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url"],
+                      fields: ["url",'id'],
                     },
                   },
                 },
@@ -189,7 +189,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url"],
+                      fields:["url",'id'],
                     },
                   },
                 },
@@ -217,7 +217,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url"],
+                    fields: ["url",'id'],
                   },
                 },
               },
