@@ -130,7 +130,7 @@ module.exports = {
   refetchCart: async (ctx) => {
     try {
       const { user } = ctx.state;
-      const { items } = ctx.request.body;
+      let { items } = ctx.request.body;
       removeFieldFromArray(items, "id");
       let cart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
