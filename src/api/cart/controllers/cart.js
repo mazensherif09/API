@@ -17,17 +17,18 @@ module.exports = {
           },
         },
       });
+      console.log(userCart);
       if (!userCart) return ctx.badRequest("Cart not found");
       // step 2 : check if new item is already in cart or not and check QTY
       const Newproduct = await strapi.entityService.findOne(
         "api::product.product",
         item.product.id
       );
+      console.log(Newproduct);
       if (!Newproduct) return ctx.badRequest("Product not found");
       const newItem = userCart?.items?.find((val) => {
         return val.product.id === item.product.id;
       });
-
       if (newItem) {
         newItem.QTY += +item.QTY;
       } else {
@@ -56,6 +57,7 @@ module.exports = {
           },
         }
       );
+      console.log(newCart);
       return ctx.send({
         data: newCart.items,
       });
