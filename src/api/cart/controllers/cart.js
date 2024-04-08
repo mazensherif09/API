@@ -1,10 +1,8 @@
-const product = require("../../product/routes/product");
-
 module.exports = {
   addItemToCartAPI: async (ctx) => {
     try {
       const { user } = ctx.state;
-      const { cart } = ctx.request.body; // [{ QTY: 1 ,product:1}]
+      const { item } = ctx.request.body; // [{ QTY: 1 ,product:1}]
       // step 1: get user cart
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
@@ -18,25 +16,29 @@ module.exports = {
           },
         },
       });
+      if (!userCart) return ctx.badRequest("Cart not found");
       // step 2 : check if new item is already in cart or not and check QTY
       const Newproduct = await strapi.entityService.findOne(
         "api::product.product",
-        cart.product
+        item.product.id
       );
-      if (!Newproduct || Newproduct.stock < cart.qty) {
-        return ctx.badRequest("Out of stock or not found");
-      }
 
-      const newItem = userCart.items.find((item) => {
-        return item.product.id === cart.product;
+      if (!Newproduct || Newproduct?.stock < item?.QTY) {
+        return ctx.badRequest("out of stock -");
+      }
+      const newItem = userCart?.items?.find((val) => {
+        return val.product.id === item.product.id;
       });
+
+      if (newItem && Newproduct.stock < +newItem.QTY + +item.QTY) {
+        return ctx.badRequest("out of stock");
+      }
       if (newItem) {
-        userCart.QTY += cart.qty;
+        newItem.QTY += +item.QTY;
       } else {
-        userCart.items.push(cart);
+        userCart.items.push(item);
       }
       // step 4 : update user cart
-
       const newCart = await strapi.entityService.update(
         "api::cart.cart",
         userCart.id,
@@ -60,7 +62,7 @@ module.exports = {
         }
       );
       return ctx.send({
-        cart: newCart,
+        data: newCart.items,
       });
     } catch (error) {
       return ctx.badRequest(error);
@@ -68,7 +70,7 @@ module.exports = {
   },
   removeItemFromCart: async (ctx) => {
     const { user } = ctx.state;
-    const { product } = ctx.request.body;
+    const { item } = ctx.request.body;
     const userCart = await strapi.db.query("api::cart.cart").findOne({
       where: { user: user.id },
       populate: {
@@ -81,12 +83,9 @@ module.exports = {
         },
       },
     });
-    const item = userCart.items.find((item) => {
-      return item.product.id === product;
-    });
 
-    userCart.items = userCart.items.filter((item) => {
-      return item.product.id !== product;
+    userCart.items = userCart.items.filter((val) => {
+      return val.product.id !== item.product.id;
     });
     const newCart = await strapi.entityService.update(
       "api::cart.cart",
@@ -111,7 +110,7 @@ module.exports = {
       }
     );
     return ctx.send({
-      cart: newCart,
+      data: newCart.items,
     });
   },
   clearCart: async (ctx) => {
@@ -130,10 +129,10 @@ module.exports = {
       }
     );
     return ctx.send({
-      cart: [],
+      data: [],
     });
   },
-  refetchMyCart: async (ctx) => {
+  refetchCart: async (ctx) => {
     try {
       const { user } = ctx.state;
       const { items } = ctx.request.body;
@@ -174,21 +173,16 @@ module.exports = {
           },
         });
       } else {
-        const newItems = cart.items.map((val) => {
-          const item = items.find((val2) => val2.id === val.id);
-
-          if (item) {
-            return {
-              ...val,
-              QTY: item.QTY,
-            };
-          } else {
-            return val;
-          }
-        });
+        const compareObjects = (obj1, obj2) => {
+          return obj1.product.id === obj2.product.id;
+        };
+        let newI = [...items, ...cart.items].filter(
+          (obj, index, arr) =>
+            arr.findIndex((innerObj) => compareObjects(innerObj, obj)) === index
+        );
         cart = await strapi.entityService.update("api::cart.cart", cart.id, {
           data: {
-            items: newItems,
+            items: newI,
           },
           populate: {
             items: {
@@ -206,10 +200,10 @@ module.exports = {
         });
       }
       return ctx.send({
-        cart,
+        data: cart.items,
       });
     } catch (error) {
-      console.log("🚀 ~ getMyCart: ~ error:", error);
+      return ctx.badRequest(error);
     }
   },
 };
