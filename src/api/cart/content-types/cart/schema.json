@@ -12,13 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "users_permissions_user": {
+    "user": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "cart"
+      "target": "plugin::users-permissions.user"
     },
-    "item": {
+    "items": {
       "displayName": "items",
       "type": "component",
       "repeatable": true,

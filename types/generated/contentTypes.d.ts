@@ -783,11 +783,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     sessionResetPassword: Attribute.BigInteger;
     OTP: Attribute.BigInteger;
     lastdateResetPassword: Attribute.BigInteger;
-    cart: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToOne',
-      'api::cart.cart'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -962,12 +957,12 @@ export interface ApiCartCart extends Schema.CollectionType {
     draftAndPublish: false;
   };
   attributes: {
-    users_permissions_user: Attribute.Relation<
+    user: Attribute.Relation<
       'api::cart.cart',
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    item: Attribute.Component<'items.items', true>;
+    items: Attribute.Component<'items.items', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
