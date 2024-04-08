@@ -130,7 +130,8 @@ module.exports = {
   connectCart: async (ctx) => {
     try {
       const { user } = ctx.state;
-      let { items } = ctx.request.body;
+      let { items = [] } = ctx.request.body;
+      console.log("🚀 ~ connectCart: ~ items:", items);
       removeFieldFromArray(items, "id"); // for handle remove id from array but id of items not id of products !
       let cart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
@@ -201,6 +202,7 @@ module.exports = {
         data: cart.items,
       });
     } catch (error) {
+      console.log("🚀 ~ connectCart: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
