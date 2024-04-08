@@ -1,3 +1,5 @@
+const removeFieldFromArray = require("../services/cart");
+
 module.exports = {
   addItemToCartAPI: async (ctx) => {
     try {
@@ -22,6 +24,7 @@ module.exports = {
         "api::product.product",
         item.product.id
       );
+      if (!Newproduct) return ctx.badRequest("Product not found");
       const newItem = userCart?.items?.find((val) => {
         return val.product.id === item.product.id;
       });
@@ -129,6 +132,7 @@ module.exports = {
     try {
       const { user } = ctx.state;
       const { items } = ctx.request.body;
+      removeFieldFromArray(items, "id");
       let cart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
         populate: {
@@ -173,6 +177,8 @@ module.exports = {
           (obj, index, arr) =>
             arr.findIndex((innerObj) => compareObjects(innerObj, obj)) === index
         );
+
+        removeFieldFromArray(newI, "id");
         cart = await strapi.entityService.update("api::cart.cart", cart.id, {
           data: {
             items: newI,

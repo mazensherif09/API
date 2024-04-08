@@ -1,9 +1,7 @@
-'use strict';
+const removeFieldFromArray = (array, fieldToRemove) => {
+    array.forEach((obj) => {
+      delete obj[fieldToRemove];
+    });
+  };
 
-/**
- * cart service
- */
-
-const { createCoreService } = require('@strapi/strapi').factories;
-
-module.exports = createCoreService('api::cart.cart');
+  module.exports = removeFieldFromArray
