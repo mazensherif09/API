@@ -13,8 +13,6 @@ module.exports = {
           },
         },
       });
-
-      console.log("🚀 ~ findOne: ~ product:", product);
       if (!product) return ctx.notFound();
       return ctx.send(product);
     } catch (error) {
