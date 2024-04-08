@@ -1,5 +1,4 @@
 const removeFieldFromArray = require("../services/cart");
-
 module.exports = {
   addItemToCartAPI: async (ctx) => {
     try {
