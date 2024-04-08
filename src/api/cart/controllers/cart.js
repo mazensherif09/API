@@ -127,7 +127,7 @@ module.exports = {
       data: [],
     });
   },
-  refetchCart: async (ctx) => {
+  connectCart: async (ctx) => {
     try {
       const { user } = ctx.state;
       let { items } = ctx.request.body;
@@ -198,6 +198,33 @@ module.exports = {
           },
         });
       }
+      return ctx.send({
+        data: cart.items,
+      });
+    } catch (error) {
+      return ctx.badRequest(error);
+    }
+  },
+  refetchCart: async (ctx) => {
+    try {
+      const { user } = ctx.state;
+      let cart = await strapi.db.query("api::cart.cart").findOne({
+        where: { user: user.id },
+        populate: {
+          items: {
+            populate: {
+              product: {
+                populate: {
+                  images: {
+                    fields: ["url"],
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+      if (!cart) ctx.send({ data: [] });
       return ctx.send({
         data: cart.items,
       });

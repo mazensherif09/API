@@ -18,6 +18,11 @@ module.exports = {
     {
       method: "PATCH",
       path: "/carts",
+      handler: "cart.connectCart",
+    },
+    {
+      method: "GET",
+      path: "/carts",
       handler: "cart.refetchCart",
     },
   ],
