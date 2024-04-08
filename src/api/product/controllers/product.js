@@ -9,11 +9,12 @@ module.exports = {
         where: { slug },
         populate: {
           images: {
-            fields: ["url"],
+            select: ["url"],
           },
         },
       });
 
+      console.log("🚀 ~ findOne: ~ product:", product);
       if (!product) return ctx.notFound();
       return ctx.send(product);
     } catch (error) {
