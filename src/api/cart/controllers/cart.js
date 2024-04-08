@@ -48,7 +48,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url"],
+                      fields: ["url",'id'],
                     },
                   },
                 },
@@ -97,7 +97,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url"],
+                    fields: ["url",'id'],
                   },
                 },
               },
@@ -132,7 +132,7 @@ module.exports = {
   connectCart: async (ctx) => {
     try {
       const { user } = ctx.state;
-      let { items } = ctx.request.body;
+      let { items = [] } = ctx.request.body;
       removeFieldFromArray(items, "id"); // for handle remove id from array but id of items not id of products !
       let cart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
@@ -142,7 +142,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url"],
+                    select: ["url",'id'],
                   },
                 },
               },
@@ -162,7 +162,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url"],
+                      fields: ["url",'id'],
                     },
                   },
                 },
@@ -178,7 +178,6 @@ module.exports = {
           (obj, index, arr) =>
             arr.findIndex((innerObj) => compareObjects(innerObj, obj)) === index
         ); // for handle marge items and handle duplicate items
-
         removeFieldFromArray(newI, "id"); // for handle remove id from array but id of items not id of products !
         // because id of items make conflict with database table
         cart = await strapi.entityService.update("api::cart.cart", cart.id, {
@@ -191,7 +190,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url"],
+                      fields:["url",'id'],
                     },
                   },
                 },
@@ -204,6 +203,7 @@ module.exports = {
         data: cart.items,
       });
     } catch (error) {
+      console.log("🚀 ~ connectCart: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
@@ -218,7 +218,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url"],
+                    fields: ["url",'id'],
                   },
                 },
               },
