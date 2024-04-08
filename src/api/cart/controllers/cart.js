@@ -131,7 +131,7 @@ module.exports = {
     try {
       const { user } = ctx.state;
       let { items } = ctx.request.body;
-      removeFieldFromArray(items, "id");// for handle remove id from array but id of items not id of products !
+      removeFieldFromArray(items, "id"); // for handle remove id from array but id of items not id of products !
       let cart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
         populate: {
