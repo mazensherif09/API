@@ -176,7 +176,6 @@ module.exports = {
           (obj, index, arr) =>
             arr.findIndex((innerObj) => compareObjects(innerObj, obj)) === index
         ); // for handle marge items and handle duplicate items
-
         removeFieldFromArray(newI, "id"); // for handle remove id from array but id of items not id of products !
         // because id of items make conflict with database table
         cart = await strapi.entityService.update("api::cart.cart", cart.id, {
