@@ -22,17 +22,10 @@ module.exports = {
         "api::product.product",
         item.product.id
       );
-
-      if (!Newproduct || Newproduct?.stock < item?.QTY) {
-        return ctx.badRequest("out of stock -");
-      }
       const newItem = userCart?.items?.find((val) => {
         return val.product.id === item.product.id;
       });
 
-      if (newItem && Newproduct.stock < +newItem.QTY + +item.QTY) {
-        return ctx.badRequest("out of stock");
-      }
       if (newItem) {
         newItem.QTY += +item.QTY;
       } else {
