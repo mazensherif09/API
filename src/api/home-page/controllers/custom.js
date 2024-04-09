@@ -25,7 +25,6 @@ module.exports = {
   },
   boundary: async (ctx) => {
     try {
-      console.log(new Date().toLocaleString())
       return ctx.send({ message: "boundary ok" });
     } catch (error) {
       return badRequest(error);
