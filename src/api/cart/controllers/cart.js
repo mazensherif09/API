@@ -82,56 +82,63 @@ module.exports = {
         },
       });
 
-    userCart.items = userCart.items.filter((val) => {
-      return val.product.id !== item.product.id;
-    });
-    const newCart = await strapi.entityService.update(
-      "api::cart.cart",
-      userCart.id,
-      {
-        data: {
-          items: userCart.items,
-        },
-        populate: {
-          items: {
-            populate: {
-              product: {
-                populate: {
-                  images: {
-                    fields: ["url",'id'],
+      userCart.items = userCart.items.filter((val) => {
+        return val.product.id !== item.product.id;
+      });
+      const newCart = await strapi.entityService.update(
+        "api::cart.cart",
+        userCart.id,
+        {
+          data: {
+            items: userCart.items,
+          },
+          populate: {
+            items: {
+              populate: {
+                product: {
+                  populate: {
+                    images: {
+                      fields: ["url", "id"],
+                    },
                   },
                 },
               },
             },
           },
-        },
-      }
-    );
-    return ctx.send({
-      data: newCart.items,
-    });
+        }
+      );
+      return ctx.send({
+        data: newCart.items,
+      });
+    } catch (error) {
+      return ctx.badRequest(error);
+    }
   },
   clearCart: async (ctx) => {
-    const { user } = ctx.state;
-    console.log("step 1");
-    const userCart = await strapi.db.query("api::cart.cart").findOne({
-      where: { user: user.id },
-    });
-    console.log("step 2");
-    if (!userCart) return ctx.badRequest("Cart not found");
-    const newCart = await strapi.entityService.update(
-      "api::cart.cart",
-      userCart.id,
-      {
-        data: {
-          items: [],
-        },
-      }
-    );
-    console.log("step 3");
-    return ctx.send({
-      data: [],
-    });
+    try {
+      const { user } = ctx.state;
+      console.log("step 1");
+      const userCart = await strapi.db.query("api::cart.cart").findOne({
+        where: { user: user.id },
+      });
+      console.log("step 2");
+      if (!userCart) return ctx.badRequest("Cart not found");
+      const newCart = await strapi.entityService.update(
+        "api::cart.cart",
+        userCart.id,
+        {
+          data: {
+            items: [],
+          },
+        }
+      );
+      console.log("step 3");
+      return ctx.send({
+        data: [],
+      });
+    } catch (error) {
+      return ctx.badRequest(error);
+    }
   },
   connectCart: async (ctx) => {
     try {
@@ -228,7 +235,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url",'id'],
+                    fields: ["url", "id"],
                   },
                 },
               },
