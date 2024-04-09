@@ -8,5 +8,10 @@ module.exports = {
         middlewares: ["api::home-page.warning"],
       },
     },
+    {
+      method: "GET",
+      path: "/boundary",
+      handler: "custom.boundary",
+    },
   ],
 };
