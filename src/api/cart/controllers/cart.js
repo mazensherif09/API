@@ -48,7 +48,10 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url",'id'],
+                      fields: ["url", "id"],
+                    },
+                    poster: {
+                      fields: ["url", "id"],
                     },
                   },
                 },
@@ -57,7 +60,6 @@ module.exports = {
           },
         }
       );
-      console.log(newCart);
       return ctx.send({
         data: newCart.items,
       });
@@ -97,7 +99,10 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url",'id'],
+                    fields: ["url", "id"],
+                  },
+                  poster: {
+                    fields: ["url", "id"],
                   },
                 },
               },
@@ -142,7 +147,10 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    select: ["url",'id'],
+                    select: ["url", "id"],
+                  },
+                  poster: {
+                    select: ["url", "id"],
                   },
                 },
               },
@@ -162,7 +170,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url",'id'],
+                      fields: ["url", "id"],
                     },
                   },
                 },
@@ -190,7 +198,10 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields:["url",'id'],
+                      fields: ["url", "id"],
+                    },
+                    poster: {
+                      fields: ["url", "id"],
                     },
                   },
                 },
@@ -218,7 +229,10 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url",'id'],
+                    fields: ["url", "id"],
+                  },
+                  poster: {
+                    fields: ["url", "id"],
                   },
                 },
               },
