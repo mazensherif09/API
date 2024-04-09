@@ -17,14 +17,12 @@ module.exports = {
           },
         },
       });
-      console.log(userCart);
       if (!userCart) return ctx.badRequest("Cart not found");
       // step 2 : check if new item is already in cart or not and check QTY
       const Newproduct = await strapi.entityService.findOne(
         "api::product.product",
         item.product.id
       );
-      console.log(Newproduct);
       if (!Newproduct) return ctx.badRequest("Product not found");
       const newItem = userCart?.items?.find((val) => {
         return val.product.id === item.product.id;
@@ -48,7 +46,10 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url",'id'],
+                      fields: ["url", "id"],
+                    },
+                    poster: {
+                      fields: ["url", "id"],
                     },
                   },
                 },
@@ -57,7 +58,6 @@ module.exports = {
           },
         }
       );
-      console.log(newCart);
       return ctx.send({
         data: newCart.items,
       });
@@ -66,55 +66,61 @@ module.exports = {
     }
   },
   removeItemFromCart: async (ctx) => {
-    const { user } = ctx.state;
-    const { item } = ctx.request.body;
-    const userCart = await strapi.db.query("api::cart.cart").findOne({
-      where: { user: user.id },
-      populate: {
-        items: {
-          populate: {
-            product: {
-              fields: ["id"],
-            },
-          },
-        },
-      },
-    });
-
-    userCart.items = userCart.items.filter((val) => {
-      return val.product.id !== item.product.id;
-    });
-    const newCart = await strapi.entityService.update(
-      "api::cart.cart",
-      userCart.id,
-      {
-        data: {
-          items: userCart.items,
-        },
+    try {
+      const { user } = ctx.state;
+      const { item } = ctx.request.body;
+      const userCart = await strapi.db.query("api::cart.cart").findOne({
+        where: { user: user.id },
         populate: {
           items: {
             populate: {
               product: {
-                populate: {
-                  images: {
-                    fields: ["url",'id'],
+                select: ["id"],
+              },
+            },
+          },
+        },
+      });
+
+      userCart.items = userCart.items.filter((val) => {
+        return val.product.id !== item.product.id;
+      });
+      const newCart = await strapi.entityService.update(
+        "api::cart.cart",
+        userCart.id,
+        {
+          data: {
+            items: userCart.items,
+          },
+          populate: {
+            items: {
+              populate: {
+                product: {
+                  populate: {
+                    images: {
+                      fields: ["url", "id"],
+                    },
                   },
                 },
               },
             },
           },
-        },
-      }
-    );
-    return ctx.send({
-      data: newCart.items,
-    });
+        }
+      );
+      return ctx.send({
+        data: newCart.items,
+      });
+    } catch (error) {
+      return ctx.badRequest(error);
+    }
   },
   clearCart: async (ctx) => {
     const { user } = ctx.state;
+    console.log("step 1");
     const userCart = await strapi.db.query("api::cart.cart").findOne({
       where: { user: user.id },
     });
+    console.log("step 2");
     if (!userCart) return ctx.badRequest("Cart not found");
     const newCart = await strapi.entityService.update(
       "api::cart.cart",
@@ -125,6 +131,7 @@ module.exports = {
         },
       }
     );
+    console.log("step 3");
     return ctx.send({
       data: [],
     });
@@ -142,7 +149,10 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    select: ["url",'id'],
+                    select: ["url", "id"],
+                  },
+                  poster: {
+                    select: ["url", "id"],
                   },
                 },
               },
@@ -162,7 +172,7 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields: ["url",'id'],
+                      fields: ["url", "id"],
                     },
                   },
                 },
@@ -190,7 +200,10 @@ module.exports = {
                 product: {
                   populate: {
                     images: {
-                      fields:["url",'id'],
+                      fields: ["url", "id"],
+                    },
+                    poster: {
+                      fields: ["url", "id"],
                     },
                   },
                 },
@@ -218,7 +231,10 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url",'id'],
+                    select: ["url", "id"],
+                  },
+                  poster: {
+                    select: ["url", "id"],
                   },
                 },
               },

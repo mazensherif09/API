@@ -11,6 +11,9 @@ module.exports = {
           images: {
             select: ["url",'id'],
           },
+          poster: {
+            select: ["url",'id'],
+          },
         },
       });
       if (!product) return ctx.notFound();
