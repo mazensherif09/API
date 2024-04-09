@@ -235,7 +235,7 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url", "id"],
+                    fields: ["url",'id'],
                   },
                 },
               },
