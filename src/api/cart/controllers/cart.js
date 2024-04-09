@@ -82,34 +82,37 @@ module.exports = {
         },
       });
 
-    userCart.items = userCart.items.filter((val) => {
-      return val.product.id !== item.product.id;
-    });
-    const newCart = await strapi.entityService.update(
-      "api::cart.cart",
-      userCart.id,
-      {
-        data: {
-          items: userCart.items,
-        },
-        populate: {
-          items: {
-            populate: {
-              product: {
-                populate: {
-                  images: {
-                    fields: ["url",'id'],
+      userCart.items = userCart.items.filter((val) => {
+        return val.product.id !== item.product.id;
+      });
+      const newCart = await strapi.entityService.update(
+        "api::cart.cart",
+        userCart.id,
+        {
+          data: {
+            items: userCart.items,
+          },
+          populate: {
+            items: {
+              populate: {
+                product: {
+                  populate: {
+                    images: {
+                      fields: ["url", "id"],
+                    },
                   },
                 },
               },
             },
           },
-        },
-      }
-    );
-    return ctx.send({
-      data: newCart.items,
-    });
+        }
+      );
+      return ctx.send({
+        data: newCart.items,
+      });
+    } catch (error) {
+      return ctx.badRequest(error);
+    }
   },
   clearCart: async (ctx) => {
     const { user } = ctx.state;
@@ -228,7 +231,10 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url",'id'],
+                    fields: ["url", "id"],
+                  },
+                  poster: {
+                    fields: ["url", "id"],
                   },
                 },
               },
