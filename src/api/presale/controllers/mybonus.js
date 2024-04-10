@@ -6,10 +6,9 @@ module.exports = {
       let { page } = ctx.request.query;
       if (!page) page = 1;
 
-      let bonus = await strapi
-        .service("api::presale.presale")
-        .finduserBonus(user, page);
-      bonus.results = bonus.results.map((val) => {
+      let bonus = await strapi.service("api::presale.presale").finduserBonus(user, page);
+      console.log("🚀 ~ mybonus: ~ bonus:", bonus)
+      bonus = bonus.results.map((val) => {
         return {
           id: val.id,
           mts_bonus: val?.mts_bonus,
