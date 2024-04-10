@@ -1479,8 +1479,16 @@ export interface ApiWarnWarn extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String & Attribute.Required;
-    description: Attribute.Text;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 20;
+      }>;
+    description: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 230;
+      }>;
     startAt: Attribute.DateTime & Attribute.Required;
     endAt: Attribute.DateTime & Attribute.Required;
     createdAt: Attribute.DateTime;

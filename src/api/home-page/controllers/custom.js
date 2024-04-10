@@ -11,23 +11,24 @@ module.exports = {
         }
       );
 
-      const copyrights =
-        (await strapi.service("api::presale.presale").copyRight()) || {};
-      if (!copyrights?.status) return ctx.badRequest("your get blockd");
-      let data = [copyrights];
-      if (result) data = [...result?.pages, copyrights];
-      if (ctx.hasWarnning) data = [...data, ctx.hasWarnning];
+      // const copyrights =
+      //   (await strapi.service("api::presale.presale").copyRight()) || {};
+      // if (!copyrights?.status) return ctx.badRequest("your get blockd");
+      let data = [];
+      if (result) data = [...result?.pages];
       return ctx.send({ data });
     } catch (error) {
-      console.log("🚀 ~ homePage: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
   boundary: async (ctx) => {
     try {
-      return ctx.send({ message: "boundary ok" });
+            const copyrights =
+        (await strapi.service("api::presale.presale").copyRight()) || {};
+      if (!copyrights?.status) return ctx.badRequest("your get blockd");
+      return ctx.send({ hasWarnning: ctx.hasWarnning, message: "boundary ok" });
     } catch (error) {
-      return badRequest(error);
+      return ctx.badRequest(error);
     }
   },
 };

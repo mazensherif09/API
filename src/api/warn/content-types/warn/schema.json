@@ -14,10 +14,13 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "maxLength": 20
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 230,
+      "required": true
     },
     "startAt": {
       "type": "datetime",

@@ -21,7 +21,7 @@ module.exports = {
       if (!user) return ctx.badRequest("user not found");
 
       const senderemail = await foegetPasswordEmail({ OTP, email });
-
+      if (!senderemail) return ctx.badRequest(" cannot send email to OTP");
       let hashEmail = "";
       const atIndex = email.indexOf("@");
       const firstTwoChars = email.substring(0, 2);
@@ -34,6 +34,7 @@ module.exports = {
         message: `email sent to ${hashEmail}`,
       });
     } catch (error) {
+      console.log("🚀 ~ forgetPassword: ~ error:", error)
       return ctx.badRequest(error);
     }
   },
