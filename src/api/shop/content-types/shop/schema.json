@@ -19,6 +19,12 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "poster": {
+      "displayName": "posters",
+      "type": "component",
+      "repeatable": true,
+      "component": "posters.posters"
     }
   }
 }

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_posters_posters",
+  "info": {
+    "displayName": "posters",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

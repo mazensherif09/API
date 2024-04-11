@@ -148,6 +148,22 @@ export interface PhasesPhases extends Schema.Component {
   };
 }
 
+export interface PostersPosters extends Schema.Component {
+  collectionName: 'components_posters_posters';
+  info: {
+    displayName: 'posters';
+    description: '';
+  };
+  attributes: {
+    category: Attribute.Relation<
+      'posters.posters',
+      'oneToOne',
+      'api::category.category'
+    >;
+    title: Attribute.String;
+  };
+}
+
 export interface RoadmapRoadmap extends Schema.Component {
   collectionName: 'components_roadmap_roadmaps';
   info: {
@@ -192,6 +208,7 @@ declare module '@strapi/types' {
       'landing.landing': LandingLanding;
       'mts-info.mts-info': MtsInfoMtsInfo;
       'phases.phases': PhasesPhases;
+      'posters.posters': PostersPosters;
       'roadmap.roadmap': RoadmapRoadmap;
       'sales.sales': SalesSales;
       'total-token-sales.total-token-sales': TotalTokenSalesTotalTokenSales;

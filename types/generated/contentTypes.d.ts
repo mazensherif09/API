@@ -1301,6 +1301,7 @@ export interface ApiShopShop extends Schema.SingleType {
   };
   attributes: {
     images: Attribute.Media & Attribute.Required;
+    poster: Attribute.Component<'posters.posters', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
