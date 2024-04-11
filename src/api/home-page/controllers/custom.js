@@ -27,5 +27,5 @@ module.exports = {
     } catch (error) {
       return ctx.badRequest(error);
     }
-  },
-};
+  }, 
+}; 
