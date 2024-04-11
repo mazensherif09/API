@@ -10,14 +10,11 @@ module.exports = {
           populate: "deep",
         }
       );
-
-      // const copyrights =
-      //   (await strapi.service("api::presale.presale").copyRight()) || {};
-      // if (!copyrights?.status) return ctx.badRequest("your get blockd");
       let data = [];
       if (result) data = [...result?.pages];
       return ctx.send({ data });
     } catch (error) {
+      console.log("🚀 ~ homePage: ~ error:", error)
       return ctx.badRequest(error);
     }
   },
