@@ -1,9 +1,24 @@
-'use strict';
-
-/**
- * product service
- */
-
-const { createCoreService } = require('@strapi/strapi').factories;
-
-module.exports = createCoreService('api::product.product');
+const handlePrice = (min = 0, max = 10000000000000) => {
+    const minPrice = typeof +min === "number" ? +min : 0;
+    const maxPrice = typeof +max === "number" ? +max : 10000000000000;
+    if (minPrice > maxPrice) {
+      return undefined;
+    }
+    if (minPrice === maxPrice) {
+      return {
+        price: { $eq: minPrice },
+      };
+    }
+    if (minPrice === 0 && maxPrice === 10000000000000) {
+      return undefined;
+    }
+  
+    return {
+      price: { $between: [minPrice, maxPrice] },
+    };
+  };
+  
+  module.exports = {
+    handlePrice,
+  };
+  

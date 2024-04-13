@@ -59,6 +59,11 @@
       "type": "uid",
       "targetField": "title",
       "required": true
+    },
+    "color": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::color.color"
     }
   }
 }

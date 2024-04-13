@@ -15,7 +15,7 @@ module.exports = {
                   },
                 },
                 filters: {
-                  publishedAt: {$notNull: true},
+                  publishedAt: { $notNull: true },
                 },
               },
             },
@@ -35,6 +35,25 @@ module.exports = {
             },
             filters: {
               publish: true,
+            },
+          },
+          Best_Deals_section: {
+            populate: {
+              products: {
+                populate: {
+                  images: {
+                    fields: ["url", "id"],
+                  },
+                  poster: {
+                    fields: ["url", "id"],
+                  },
+                },
+                filters: {
+                  publishedAt: { $notNull: true },
+                },
+                start:0,
+                limit:15,
+              },
             },
           },
         },
@@ -60,7 +79,7 @@ module.exports = {
         newIn,
         sliderCards,
       };
-      return ctx.send( data );
+      return ctx.send(data);
     } catch (error) {
       console.log(error);
       return ctx.badRequest(error);

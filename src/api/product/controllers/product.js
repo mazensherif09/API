@@ -1,3 +1,11 @@
+const {
+  convertCommaSeparatedValues,
+  handleMultiQuery,
+  handlePage,
+  handleSingleQuery,
+} = require("../../../utils/handleQuery");
+const { handlePrice } = require("../services/product");
+
 module.exports = {
   findOne: async (ctx) => {
     try {
@@ -8,10 +16,10 @@ module.exports = {
         where: { slug },
         populate: {
           images: {
-            select: ["url",'id'],
+            select: ["url", "id"],
           },
           poster: {
-            select: ["url",'id'],
+            select: ["url", "id"],
           },
         },
       });
@@ -24,23 +32,41 @@ module.exports = {
   //start enpoints for users
   findMany: async (ctx) => {
     try {
-      let { page } = ctx.request.query;
-      if (!page) page = 1;
-      let products = await strapi.entityService.findPage("api::product.product" ,{
-        page: +page,
-        pageSize: 10,
-        populate: {
-          images: {
-            fields: ["url",'id'],
+      let { page = 1 } = ctx.request.query;
+      const query = convertCommaSeparatedValues({ ...ctx?.request?.query }, [
+        "page",
+      ]);
+      console.log("🚀 ~ findMany: ~ query:", query)
+      const filters = {
+        ...handleSingleQuery("category", "slug", "$eq", query.category),
+        ...handleMultiQuery("subcategory", "slug", query.subcategories),
+        ...handleMultiQuery("color", "color", query?.color),
+        ...handlePrice(query?.minprice, query?.maxprice),
+      };
+
+      console.log("🚀 ~ findMany: ~ filters:", filters);
+      let products = await strapi.entityService.findPage(
+        "api::product.product",
+        {
+          page: handlePage(page),
+          pageSize: 15,
+          populate: {
+            images: {
+              fields: ["url", "id"],
+            },
+            poster: {
+              fields: ["url", "id"],
+            },
+            category: true,
+            subcategory: true,
           },
-          poster: {
-            fields: ["url",'id'],
-          },
-        },
-      });
+          filters,
+        }
+      );
       if (!products) return ctx.notFound();
       return ctx.send(products);
     } catch (error) {
+      console.log("🚀 ~ findMany: ~ error:", error);
       return ctx.badRequest();
     }
   },

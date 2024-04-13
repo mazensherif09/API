@@ -44,6 +44,20 @@ export interface BestDealsBD extends Schema.Component {
   };
 }
 
+export interface BestDealsBestDealsSection extends Schema.Component {
+  collectionName: 'components_best_deals_section';
+  info: {
+    displayName: 'BestDeals_section';
+  };
+  attributes: {
+    products: Attribute.Relation<
+      'best-deals.best-deals-section',
+      'oneToMany',
+      'api::product.product'
+    >;
+  };
+}
+
 export interface CardsCards extends Schema.Component {
   collectionName: 'components_cards_cards';
   info: {
@@ -269,6 +283,7 @@ declare module '@strapi/types' {
       'about.about': AboutAbout;
       'analysis.analysis': AnalysisAnalysis;
       'best-deals.b-d': BestDealsBD;
+      'best-deals.best-deals-section': BestDealsBestDealsSection;
       'cards.cards': CardsCards;
       'categories.categories': CategoriesCategories;
       'contact-us.contact-us': ContactUsContactUs;
