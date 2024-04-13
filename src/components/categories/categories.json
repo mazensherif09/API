@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_categories_categories",
+  "info": {
+    "displayName": "categories"
+  },
+  "options": {},
+  "attributes": {
+    "publish": {
+      "type": "boolean",
+      "default": false
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category"
+    }
+  }
+}

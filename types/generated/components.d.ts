@@ -29,6 +29,21 @@ export interface AnalysisAnalysis extends Schema.Component {
   };
 }
 
+export interface BestDealsBD extends Schema.Component {
+  collectionName: 'components_best_deals_b_ds';
+  info: {
+    displayName: 'B_D';
+    description: '';
+  };
+  attributes: {
+    products: Attribute.Relation<
+      'best-deals.b-d',
+      'oneToMany',
+      'api::product.product'
+    >;
+  };
+}
+
 export interface CardsCards extends Schema.Component {
   collectionName: 'components_cards_cards';
   info: {
@@ -37,6 +52,21 @@ export interface CardsCards extends Schema.Component {
   attributes: {
     title: Attribute.String;
     description: Attribute.Text;
+  };
+}
+
+export interface CategoriesCategories extends Schema.Component {
+  collectionName: 'components_categories_categories';
+  info: {
+    displayName: 'categories';
+  };
+  attributes: {
+    publish: Attribute.Boolean & Attribute.DefaultTo<false>;
+    categories: Attribute.Relation<
+      'categories.categories',
+      'oneToMany',
+      'api::category.category'
+    >;
   };
 }
 
@@ -174,6 +204,18 @@ export interface RoadmapRoadmap extends Schema.Component {
   };
 }
 
+export interface SalesSectionSalesSection extends Schema.Component {
+  collectionName: 'components_sales_section_sales_sections';
+  info: {
+    displayName: 'sales_section';
+    description: '';
+  };
+  attributes: {
+    salescards: Attribute.Component<'salescards.salescards', true>;
+    publish: Attribute.Boolean & Attribute.DefaultTo<false>;
+  };
+}
+
 export interface SalesSales extends Schema.Component {
   collectionName: 'components_sales_sales';
   info: {
@@ -181,6 +223,31 @@ export interface SalesSales extends Schema.Component {
   };
   attributes: {
     sales: Attribute.Component<'cards.cards', true>;
+  };
+}
+
+export interface SalescardsSales extends Schema.Component {
+  collectionName: 'components_salescards_sales';
+  info: {
+    displayName: 'sales';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    icon: Attribute.Media;
+  };
+}
+
+export interface SalescardsSalescards extends Schema.Component {
+  collectionName: 'components_salescards_salescards';
+  info: {
+    displayName: 'salescards';
+    description: '';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    icon: Attribute.Media & Attribute.Required;
   };
 }
 
@@ -201,7 +268,9 @@ declare module '@strapi/types' {
     export interface Components {
       'about.about': AboutAbout;
       'analysis.analysis': AnalysisAnalysis;
+      'best-deals.b-d': BestDealsBD;
       'cards.cards': CardsCards;
+      'categories.categories': CategoriesCategories;
       'contact-us.contact-us': ContactUsContactUs;
       'data.data': DataData;
       'items.items': ItemsItems;
@@ -210,7 +279,10 @@ declare module '@strapi/types' {
       'phases.phases': PhasesPhases;
       'posters.posters': PostersPosters;
       'roadmap.roadmap': RoadmapRoadmap;
+      'sales-section.sales-section': SalesSectionSalesSection;
       'sales.sales': SalesSales;
+      'salescards.sales': SalescardsSales;
+      'salescards.salescards': SalescardsSalescards;
       'total-token-sales.total-token-sales': TotalTokenSalesTotalTokenSales;
     }
   }

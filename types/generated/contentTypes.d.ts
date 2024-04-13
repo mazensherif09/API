@@ -984,13 +984,8 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
+    title: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.String;
-    subcategory: Attribute.Relation<
-      'api::category.category',
-      'manyToOne',
-      'api::subcategory.subcategory'
-    >;
     image: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1300,8 +1295,10 @@ export interface ApiShopShop extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    images: Attribute.Media & Attribute.Required;
-    poster: Attribute.Component<'posters.posters', true>;
+    landing_slider: Attribute.Media & Attribute.Required;
+    sales_section: Attribute.Component<'sales-section.sales-section'>;
+    category_section: Attribute.Component<'categories.categories'>;
+    Best_Deals_section: Attribute.Component<'best-deals.b-d'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1365,11 +1362,6 @@ export interface ApiSubcategorySubcategory extends Schema.CollectionType {
   attributes: {
     title: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.Text;
-    categories: Attribute.Relation<
-      'api::subcategory.subcategory',
-      'oneToMany',
-      'api::category.category'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

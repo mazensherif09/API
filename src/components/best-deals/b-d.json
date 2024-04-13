@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_best_deals_b_ds",
+  "info": {
+    "displayName": "B_D",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
+    }
+  }
+}
