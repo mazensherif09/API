@@ -109,7 +109,7 @@ exports
 dist
 build
 .strapi-updater.json
-
+/database-token-last-backup
 ############################
 # for production use
 ############################
