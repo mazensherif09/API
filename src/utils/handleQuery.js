@@ -24,7 +24,7 @@ const convertCommaSeparatedValues = (obj = {}, remove) => {
 
 const handleMultiQuery = (query, target, value) => {
   if (!query || !value || !target) {
-    return undefined;
+    return ;
   }
   if (typeof value === "object") {
     return { [query]: { [target]: { $in: value } } };
@@ -35,7 +35,7 @@ const handleMultiQuery = (query, target, value) => {
 };
 const handleSingleQuery = (query, target, operator, value) => {
   if (!query || !value || !operator || !target) {
-    return undefined;
+    return 
   }
   return {
     [query]: {
