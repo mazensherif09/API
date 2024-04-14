@@ -1516,12 +1516,12 @@ export interface ApiWarnWarn extends Schema.SingleType {
     title: Attribute.String &
       Attribute.Required &
       Attribute.SetMinMaxLength<{
-        maxLength: 20;
+        maxLength: 50;
       }>;
     description: Attribute.Text &
       Attribute.Required &
       Attribute.SetMinMaxLength<{
-        maxLength: 230;
+        maxLength: 380;
       }>;
     startAt: Attribute.DateTime & Attribute.Required;
     endAt: Attribute.DateTime & Attribute.Required;

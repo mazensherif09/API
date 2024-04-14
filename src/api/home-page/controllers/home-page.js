@@ -13,7 +13,7 @@ module.exports = {
         if (result) data = [...result?.pages];
         return ctx.send({ data });
       } catch (error) {
-        console.log("🚀 ~ homePage: ~ error:", error);
+        
         return ctx.badRequest(error);
       }
     },
