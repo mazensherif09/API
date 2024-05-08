@@ -58,6 +58,5 @@ module.exports = {
   handleSingleQuery,
   handleMultiQuery,
   convertCommaSeparatedValues,
-
   handlePage,
 };

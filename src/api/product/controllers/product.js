@@ -9,7 +9,7 @@ const { handlePrice } = require("../services/product");
 module.exports = {
   findOne: async (ctx) => {
     try {
-      const slug = ctx.request.params?.slug;
+      const {slug} = ctx.request.params;
       if (!slug) return ctx.badRequest();
 
       let product = await strapi.db.query("api::product.product").findOne({
@@ -33,10 +33,10 @@ module.exports = {
   findMany: async (ctx) => {
     try {
       let { page = 1 } = ctx.request.query;
+      // ?page=osama
       const query = convertCommaSeparatedValues({ ...ctx?.request?.query }, [
         "page",
       ]);
-      console.log("🚀 ~ findMany: ~ query:", query)
       const filters = {
         ...handleSingleQuery("category", "slug", "$eq", query.category),
         ...handleMultiQuery("subcategory", "slug", query.subcategories),
@@ -44,7 +44,7 @@ module.exports = {
         ...handlePrice(query?.minprice, query?.maxprice),
       };
 
-      console.log("🚀 ~ findMany: ~ filters:", filters);
+     
       let products = await strapi.entityService.findPage(
         "api::product.product",
         {
