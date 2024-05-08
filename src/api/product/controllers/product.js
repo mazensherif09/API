@@ -42,6 +42,7 @@ module.exports = {
         ...handlePrice(query?.minprice, query?.maxprice),
       };
 
+  
      
       let products = await strapi.entityService.findPage(
         "api::product.product",
@@ -58,6 +59,7 @@ module.exports = {
             category: true,
             subcategory: true,
           },
+         // @ts-ignore
           filters,
         }
       );
@@ -69,5 +71,3 @@ module.exports = {
     }
   },
 };
-//
-// module.exports = createCoreController('api::product.product');
