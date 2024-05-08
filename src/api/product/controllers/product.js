@@ -60,8 +60,9 @@ module.exports = {
             category: true,
             subcategory: true,
           },
-          filters,
+          // filters,
         }
+      }
       );
       if (!products) return ctx.notFound();
       return ctx.send(products);
@@ -71,5 +72,5 @@ module.exports = {
     }
   },
 };
-
+//
 // module.exports = createCoreController('api::product.product');
