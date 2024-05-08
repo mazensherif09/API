@@ -46,6 +46,7 @@ module.exports = {
           },
           // filters,
         }
+      }
       );
       if (!products) return ctx.notFound();
       return ctx.send(products);
