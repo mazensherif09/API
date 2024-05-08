@@ -1,9 +1,9 @@
-'use strict';
-
-/**
- * subcategory router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::subcategory.subcategory');
+module.exports = {
+  routes: [
+    {
+      method: "GET",
+      path: "/api/category/:slug/subcategories",
+      handler: "subcategory.getSubCategories",
+    },
+  ],
+};

@@ -1,3 +1,11 @@
+const {
+  convertCommaSeparatedValues,
+  handleMultiQuery,
+  handlePage,
+  handleSingleQuery,
+} = require("../../../utils/handleQuery");
+const { handlePrice } = require("../services/product");
+
 module.exports = {
   findOne: async (ctx) => {
     try {
@@ -8,10 +16,10 @@ module.exports = {
         where: { slug },
         populate: {
           images: {
-            select: ["url",'id'],
+            select: ["url", "id"],
           },
           poster: {
-            select: ["url",'id'],
+            select: ["url", "id"],
           },
         },
       });
@@ -28,7 +36,7 @@ module.exports = {
       if (!page) page = 1;
       let products = await strapi.entityService.findPage("api::product.product" ,{
         page: +page,
-        pageSize: 3,
+        pageSize: 10,
         populate: {
           images: {
             fields: ["url",'id'],
@@ -36,11 +44,13 @@ module.exports = {
           poster: {
             fields: ["url",'id'],
           },
-        },
-      });
+          filters,
+        }
+      );
       if (!products) return ctx.notFound();
       return ctx.send(products);
     } catch (error) {
+      console.log("🚀 ~ findMany: ~ error:", error);
       return ctx.badRequest();
     }
   },

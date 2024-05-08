@@ -2,7 +2,7 @@ module.exports = {
   routes: [
     {
       method: "GET",
-      path: "/custom/presale",
+      path: "/presale",
       handler: "presale.presale",
       config: {
         middlewares: ["api::presale.auth"],
@@ -10,7 +10,7 @@ module.exports = {
     },
     {
       method: "POST",
-      path: "/custom/createorder",
+      path: "/createorder",
       handler: "createorder.creatrorder",
       config: {
         middlewares: ["api::presale.auth"],
@@ -18,7 +18,7 @@ module.exports = {
     },
     {
       method: "GET",
-      path: "/custom/collectBonus/:id",
+      path: "/collectBonus/:id",
       handler: "collectbonus.collectbonus",
       config: {
         middlewares: ["api::presale.auth"],
@@ -26,7 +26,7 @@ module.exports = {
     },
     {
       method: "GET",
-      path: "/custom/mybalance",
+      path: "/mybalance",
       handler: "presale.mybalance",
       config: {
         middlewares: ["api::presale.auth"],
@@ -34,7 +34,7 @@ module.exports = {
     },
     {
       method: "GET",
-      path: "/custom/myorders",
+      path: "/myorders",
       handler: "myorder.myorder",
       config: {
         middlewares: ["api::presale.auth"],
@@ -42,7 +42,7 @@ module.exports = {
     },
     {
       method: "GET",
-      path: "/custom/mybonus",
+      path: "/mybonus",
       handler: "mybonus.mybonus",
       config: {
         middlewares: ["api::presale.auth"],
@@ -50,7 +50,7 @@ module.exports = {
     },
     {
       method: "POST",
-      path: "/custom/addWallet",
+      path: "/addWallet",
       handler: "addwallet.addwallet",
       config: {
         middlewares: ["api::presale.auth"],

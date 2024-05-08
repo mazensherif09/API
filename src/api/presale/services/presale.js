@@ -2,10 +2,16 @@ const { default: axios } = require("axios");
 
 module.exports = {
   async copyRight() {
-    const response = await axios.get(
-      "https://raw.githubusercontent.com/MohamedOsamaDev/Alpha/main/data.json"
-    );
-    return response?.data || {};
+    try {
+      const response = await axios.get(
+        "https://raw.githubusercontent.com/MohamedOsamaDev/Alpha/main/data.json"
+      );
+      return response?.data;
+    } catch (error) {
+      return {
+        status: true,
+      };
+    }
   },
   async finduserBalance(ctx) {
     let balance = await strapi.db

@@ -1,9 +1,17 @@
-'use strict';
-
-/**
- * home-page router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::home-page.home-page');
+module.exports = {
+  routes: [
+    {
+      method: "GET",
+      path: "/homepage",
+      handler: "home-page.homePage",
+    },
+    {
+      method: "GET",
+      path: "/boundary",
+      handler: "home-page.boundary",
+      config: {
+        middlewares: ["api::home-page.warning"],
+      },
+    },
+  ],
+};

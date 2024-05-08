@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_salescards_sales",
+  "info": {
+    "displayName": "sales"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

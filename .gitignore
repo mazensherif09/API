@@ -76,8 +76,8 @@ $RECYCLE.BIN/
 ssl
 .idea
 nbproject
-public/uploads/*
-!public/uploads/.gitkeep
+# public/uploads/*
+# !public/uploads/.gitkeep
 
 ############################
 # Node.js
@@ -109,7 +109,7 @@ exports
 dist
 build
 .strapi-updater.json
-
+/database-token-last-backup
 ############################
 # for production use
 ############################

@@ -984,14 +984,10 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
+    title: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.String;
-    subcategory: Attribute.Relation<
-      'api::category.category',
-      'manyToOne',
-      'api::subcategory.subcategory'
-    >;
     image: Attribute.Media;
+    slug: Attribute.UID<'api::category.category', 'title'> & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1003,6 +999,35 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiColorColor extends Schema.CollectionType {
+  collectionName: 'colors';
+  info: {
+    singularName: 'color';
+    pluralName: 'colors';
+    displayName: 'color';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    color: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::color.color',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::color.color',
       'oneToOne',
       'admin::user'
     > &
@@ -1270,6 +1295,11 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'api::category.category'
     >;
     slug: Attribute.UID<'api::product.product', 'title'> & Attribute.Required;
+    color: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'api::color.color'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1300,7 +1330,10 @@ export interface ApiShopShop extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    images: Attribute.Media & Attribute.Required;
+    landing_slider: Attribute.Media & Attribute.Required;
+    sales_section: Attribute.Component<'sales-section.sales-section'>;
+    category_section: Attribute.Component<'categories.categories'>;
+    Best_Deals_section: Attribute.Component<'best-deals.b-d'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1369,6 +1402,7 @@ export interface ApiSubcategorySubcategory extends Schema.CollectionType {
       'oneToMany',
       'api::category.category'
     >;
+    slug: Attribute.UID<'api::subcategory.subcategory', 'title'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1479,8 +1513,16 @@ export interface ApiWarnWarn extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String & Attribute.Required;
-    description: Attribute.Text;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    description: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 380;
+      }>;
     startAt: Attribute.DateTime & Attribute.Required;
     endAt: Attribute.DateTime & Attribute.Required;
     createdAt: Attribute.DateTime;
@@ -1516,6 +1558,7 @@ declare module '@strapi/types' {
       'api::bonus.bonus': ApiBonusBonus;
       'api::cart.cart': ApiCartCart;
       'api::category.category': ApiCategoryCategory;
+      'api::color.color': ApiColorColor;
       'api::contact-us-from.contact-us-from': ApiContactUsFromContactUsFrom;
       'api::global-information.global-information': ApiGlobalInformationGlobalInformation;
       'api::home-page.home-page': ApiHomePageHomePage;

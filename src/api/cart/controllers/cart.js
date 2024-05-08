@@ -235,7 +235,10 @@ module.exports = {
               product: {
                 populate: {
                   images: {
-                    fields: ["url",'id'],
+                    select: ["url", "id"],
+                  },
+                  poster: {
+                    select: ["url", "id"],
                   },
                 },
               },

@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_sales_section_sales_sections",
+  "info": {
+    "displayName": "sales_section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "salescards": {
+      "displayName": "salescards",
+      "type": "component",
+      "repeatable": true,
+      "component": "salescards.salescards"
+    },
+    "publish": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
