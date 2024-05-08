@@ -33,7 +33,7 @@ module.exports = {
   findMany: async (ctx) => {
     try {
       let { page = 1 } = ctx.request.query;
-      // ?page=osama
+      
       const query = convertCommaSeparatedValues({ ...ctx?.request?.query }, [
         "page",
       ]);
@@ -60,9 +60,8 @@ module.exports = {
             category: true,
             subcategory: true,
           },
-          // filters,
+          filters,
         }
-      }
       );
       if (!products) return ctx.notFound();
       return ctx.send(products);
