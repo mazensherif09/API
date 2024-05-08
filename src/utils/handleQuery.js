@@ -46,12 +46,17 @@ const handleSingleQuery = (query, target, operator, value) => {
   };
 };
 
-const handlePage = (page) => {
-  // Check if page is a number and greater than or equal to 1
-  if (typeof page !== "number" || page < 1) {
-    return 1;
+const handlePage = (page, onNull=1) => {
+  // Convert page to a number
+  const pageNumber = Number(page);
+
+  // Check if pageNumber is a valid number and less than 1
+  if (isNaN(pageNumber) || pageNumber < 1) {
+      // If it's not a valid number or less than 1, return 1
+      return onNull;
   } else {
-    return page;
+      // If it's a valid number and greater than or equal to 1, return the pageNumber
+      return pageNumber;
   }
 };
 module.exports = {

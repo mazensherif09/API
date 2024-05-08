@@ -31,9 +31,7 @@ module.exports = {
   },
   //start enpoints for users
   findMany: async (ctx) => {
-    try {
-      let { page = 1 } = ctx.request.query;
-      
+    try {      
       const query = convertCommaSeparatedValues({ ...ctx?.request?.query }, [
         "page",
       ]);
@@ -48,7 +46,7 @@ module.exports = {
       let products = await strapi.entityService.findPage(
         "api::product.product",
         {
-          page: handlePage(page),
+          page: handlePage(ctx?.request?.query?.page),
           pageSize: 15,
           populate: {
             images: {
