@@ -28,7 +28,7 @@ module.exports = {
       if (!page) page = 1;
       let products = await strapi.entityService.findPage("api::product.product" ,{
         page: +page,
-        pageSize: 10,
+        pageSize: 3,
         populate: {
           images: {
             fields: ["url",'id'],
