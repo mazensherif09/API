@@ -44,7 +44,7 @@ module.exports = {
           poster: {
             fields: ["url",'id'],
           },
-          filters,
+          // filters,
         }
       );
       if (!products) return ctx.notFound();
