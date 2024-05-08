@@ -113,7 +113,7 @@ module.exports = {
       "api::mts-user-order.mts-user-order",
       {
         page: +page,
-        pageSize: 4,
+        pageSize: 20,
         filters: { customer: user.id },
         sort: { createdAt: "desc" },
         populate: ["network"],

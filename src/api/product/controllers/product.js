@@ -41,9 +41,6 @@ module.exports = {
         ...handleMultiQuery("color", "color", query?.color),
         ...handlePrice(query?.minprice, query?.maxprice),
       };
-
-  
-     
       let products = await strapi.entityService.findPage(
         "api::product.product",
         {
