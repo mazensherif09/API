@@ -146,7 +146,7 @@ module.exports = {
       let { items = [] } = ctx.request.body;
       removeFieldFromArray(items, "id"); // for handle remove id from array but id of items not id of products !
       let cart = await strapi.db.query("api::cart.cart").findOne({
-        where: { user: user.id },
+        where: { user: user?.id },
         populate: {
           items: {
             populate: {
@@ -167,7 +167,7 @@ module.exports = {
       if (!cart) {
         cart = await strapi.entityService.create("api::cart.cart", {
           data: {
-            user: user.id,
+            user: user?.id,
             items,
           },
           populate: {
@@ -186,7 +186,7 @@ module.exports = {
         });
       } else {
         const compareObjects = (obj1, obj2) => {
-          return obj1.product.id === obj2.product.id;
+          return obj1.product?.id === obj2.product?.id;
         }; // for compare spafic field in object
         let newI = [...items, ...cart.items].filter(
           (obj, index, arr) =>
@@ -194,7 +194,7 @@ module.exports = {
         ); // for handle marge items and handle duplicate items
         removeFieldFromArray(newI, "id"); // for handle remove id from array but id of items not id of products !
         // because id of items make conflict with database table
-        cart = await strapi.entityService.update("api::cart.cart", cart.id, {
+        cart = await strapi.entityService.update("api::cart.cart", cart?.id, {
           data: {
             items: newI,
           },

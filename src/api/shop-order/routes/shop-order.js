@@ -1,9 +1,13 @@
-'use strict';
-
-/**
- * shop-order router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::shop-order.shop-order');
+module.exports = {
+    routes: [
+      {
+        method: "POST",
+        path: "/makeorder",
+        handler: "shop-order.makeorder",
+        // config: {
+        //   middlewares: ["api::presale.auth"],
+        // },
+      },
+    ],
+  };
+  

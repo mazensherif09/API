@@ -3,9 +3,7 @@ const LoginVal = Joi.object({
   identifier: Joi.string().min(6).required().messages({
     "string.empty": "Enter email or username !",
   }).trim(),
-  password: Joi.string()
-    .pattern(/^[A-Z][a-z0-9#@]{8,30}$/).trim()
-    .required()
+  password: Joi.string().required()
     .messages({
       "string.pattern.base":
         "password must contain Uppercase letters: A-Z Lowercase letters: a-z.Numbers: 0-9 !",
@@ -14,3 +12,6 @@ const LoginVal = Joi.object({
 });
 
 module.exports = { LoginVal };
+
+
+// .pattern(/^[A-Z][a-z0-9#@]{8,30}$/).trim()
