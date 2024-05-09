@@ -50,7 +50,7 @@ module.exports = {
       );
       // 5 update user cart
       const newCart = await strapi.entityService.update(
-        "api::shop-order.shop-order",
+        "api::cart.cart",
         userCart.id,
         {
           data: {
