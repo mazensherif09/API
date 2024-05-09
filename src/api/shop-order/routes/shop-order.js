@@ -6,6 +6,12 @@ module.exports = {
         handler: "shop-order.create",
         
       },
+      {
+        method: "GET",
+        path: "/shop/orders",
+        handler: "shop-order.findMany",
+        
+      },
     ],
   };
   
