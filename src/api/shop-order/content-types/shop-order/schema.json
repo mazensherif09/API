@@ -17,7 +17,7 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "item": {
+    "items": {
       "type": "component",
       "repeatable": true,
       "component": "items.items"
@@ -29,7 +29,8 @@
         "approved",
         "delivered",
         "cancelled "
-      ]
+      ],
+      "default": "pending"
     },
     "total": {
       "type": "decimal"

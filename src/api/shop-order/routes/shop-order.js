@@ -2,11 +2,9 @@ module.exports = {
     routes: [
       {
         method: "POST",
-        path: "/makeorder",
-        handler: "shop-order.makeorder",
-        // config: {
-        //   middlewares: ["api::presale.auth"],
-        // },
+        path: "/shop/orders",
+        handler: "shop-order.create",
+        
       },
     ],
   };

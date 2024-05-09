@@ -1361,10 +1361,11 @@ export interface ApiShopOrderShopOrder extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    item: Attribute.Component<'items.items', true>;
+    items: Attribute.Component<'items.items', true>;
     status: Attribute.Enumeration<
       ['pending', 'approved', 'delivered', 'cancelled ']
-    >;
+    > &
+      Attribute.DefaultTo<'pending'>;
     total: Attribute.Decimal;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
