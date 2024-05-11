@@ -1,3 +1,5 @@
+const { handlePage } = require("../../../utils/handleQuery");
+
 module.exports = {
   //start enpoints for users
   create: async (ctx) => {
@@ -32,6 +34,7 @@ module.exports = {
         let isAvilblie = item?.product?.stock >= item?.QTY;
         if (!isAvilblie) errorProducts = [...errorProducts, item];
       });
+<<<<<<< HEAD
 
       let checker = userCart?.items.find(
         (item) => item?.product?.stock < item?.QTY
@@ -39,6 +42,14 @@ module.exports = {
       if (checker)
         return ctx.badRequest("out of stock", {
           cart: userCart?.items,
+=======
+      console.log("error products");
+      if (!!errorProducts.length)
+        return ctx.badRequest("out of stock", {
+          message: "not avilblie",
+          success: false,
+          details: errorProducts,
+>>>>>>> 51a956a584744343d052d844c3f148b7cf165992
         });
       // 3 calculate the total order
       let totalOrder = userCart?.items?.map((item) => {
@@ -79,6 +90,53 @@ module.exports = {
       });
     } catch (error) {
       return ctx.badRequest(error);
+    }
+  },
+  findMany: async (ctx) => {
+    try {
+      //1- get all the records
+      const { user } = ctx.state;
+      let { page } = ctx.request.query;
+      if (!page) page = 1;
+
+      //2- get orders related to the current user
+      let orders = await strapi.entityService.findPage(
+        "api::shop-order.shop-order",
+        {
+          page: +page,
+          pageSize: 4,
+          populate: {
+            items: {
+              populate: {
+                product: {
+                  populate:{
+                    images: {
+                      fields: ["url", "id"],
+                    },
+                    poster: {
+                      fields: ["url", "id"],
+                    },
+                  }
+                },
+              },
+            },
+          },
+          filters: {
+            user: user?.id,
+          },
+        }  
+      );
+
+      //3- check if there are any orders
+      if (!orders) {
+        return ctx.send({
+          message: "No orders found yet",
+        });
+      }
+      
+      return ctx.send(orders);
+    } catch (error) {
+      return ctx.badRequest();
     }
   },
 };
