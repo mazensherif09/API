@@ -72,7 +72,6 @@ module.exports = {
         message: "success",
       });
     } catch (error) {
-      console.log("🚀 ~ create: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
@@ -88,7 +87,7 @@ module.exports = {
         "api::shop-order.shop-order",
         {
           page: +page,
-          pageSize: 4,
+          pageSize: 20,
           populate: {
             items: {
               populate: {
