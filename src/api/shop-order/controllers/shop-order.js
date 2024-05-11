@@ -12,14 +12,7 @@ module.exports = {
           items: {
             populate: {
               product: {
-                populate: {
-                  images: {
-                    fields: ["url", "id"],
-                  },
-                  poster: {
-                    fields: ["url", "id"],
-                  },
-                },
+                fields: ["stock"],
               },
             },
           },
@@ -31,29 +24,19 @@ module.exports = {
       // 2  handle check qty for products in cart
       let errorProducts = [];
       userCart?.items?.map((item) => {
-        let isAvilblie = item?.product?.stock >= item?.QTY;
+        let isAvilblie = item?.product?.stock >= item.QTY;
         if (!isAvilblie) errorProducts = [...errorProducts, item];
       });
-<<<<<<< HEAD
-
-      let checker = userCart?.items.find(
-        (item) => item?.product?.stock < item?.QTY
-      );
-      if (checker)
-        return ctx.badRequest("out of stock", {
-          cart: userCart?.items,
-=======
       console.log("error products");
       if (!!errorProducts.length)
         return ctx.badRequest("out of stock", {
           message: "not avilblie",
           success: false,
           details: errorProducts,
->>>>>>> 51a956a584744343d052d844c3f148b7cf165992
         });
       // 3 calculate the total order
       let totalOrder = userCart?.items?.map((item) => {
-        return item?.product?.price * item?.QTY;
+        return item.product.price * item.QTY;
       }); // handle calc qty
       totalOrder = totalOrder?.reduce((a, b) => a + b, 0); // calc final total
       // 4 create order
@@ -79,9 +62,9 @@ module.exports = {
       );
       // 6 subtract qty from products
       userCart?.items?.map((item) => {
-        strapi.entityService.update("api::product.product", item?.product?.id, {
+        strapi.entityService.update("api::product.product", item.product.id, {
           data: {
-            stock: item?.product?.stock - item?.QTY,
+            stock: item.product.stock - item.QTY,
           },
         });
       });
@@ -89,6 +72,7 @@ module.exports = {
         message: "success",
       });
     } catch (error) {
+      console.log("🚀 ~ create: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
