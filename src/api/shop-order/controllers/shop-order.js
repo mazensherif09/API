@@ -12,7 +12,14 @@ module.exports = {
           items: {
             populate: {
               product: {
-                fields: ["stock"],
+                populate: {
+                  images: {
+                    fields: ["url", "id"],
+                  },
+                  poster: {
+                    fields: ["url", "id"],
+                  },
+                },
               },
             },
           },
@@ -107,6 +114,7 @@ module.exports = {
           filters: {
             user: user?.id,
           },
+          sort: { createdAt: "desc" },
         }  
       );
 

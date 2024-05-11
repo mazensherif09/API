@@ -927,7 +927,19 @@ export interface ApiBonusBonus extends Schema.CollectionType {
       'oneToOne',
       'api::mts-user-order.mts-user-order'
     >;
-    uuid: Attribute.UID & Attribute.CustomField<'plugin::field-uuid.uuid'>;
+    orderID: Attribute.UID<
+      undefined,
+      undefined,
+      {
+        'uuid-format': '^[A-F0-9]{10}$';
+      }
+    > &
+      Attribute.CustomField<
+        'plugin::strapi-advanced-uuid.uuid',
+        {
+          'uuid-format': '^[A-F0-9]{10}$';
+        }
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1363,10 +1375,23 @@ export interface ApiShopOrderShopOrder extends Schema.CollectionType {
     >;
     items: Attribute.Component<'items.items', true>;
     status: Attribute.Enumeration<
-      ['pending', 'approved', 'delivered', 'cancelled ']
+      ['pending', 'approved', 'delivered', 'canceled']
     > &
       Attribute.DefaultTo<'pending'>;
     total: Attribute.Decimal;
+    orderID: Attribute.UID<
+      undefined,
+      undefined,
+      {
+        'uuid-format': '^[A-F0-9]{12}$';
+      }
+    > &
+      Attribute.CustomField<
+        'plugin::strapi-advanced-uuid.uuid',
+        {
+          'uuid-format': '^[A-F0-9]{12}$';
+        }
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

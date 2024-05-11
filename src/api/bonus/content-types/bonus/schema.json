@@ -35,9 +35,12 @@
       "target": "api::mts-user-order.mts-user-order",
       "mappedBy": "bonus"
     },
-    "uuid": {
+    "orderID": {
       "type": "customField",
-      "customField": "plugin::field-uuid.uuid"
+      "options": {
+        "uuid-format": "^[A-F0-9]{10}$"
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
     }
   }
 }

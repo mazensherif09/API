@@ -4,7 +4,6 @@ module.exports = {
     try {
       const { user } = ctx.state;
       const { item } = ctx.request.body; // [{ QTY: 1 ,product:1}]
-      console.log("🚀 ~ addItemToCartAPI: ~ item:", item)
       // step 1: get user cart
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
@@ -29,7 +28,7 @@ module.exports = {
         return val.product.id === item.product.id;
       });
       if (newItem) {
-        newItem.QTY = +item?.QTY;
+        newItem.QTY = +item?.QTY === 0 ? 1 : +item?.QTY;
       } else {
         userCart.items.push(item);
       }

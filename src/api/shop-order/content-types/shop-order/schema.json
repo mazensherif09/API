@@ -28,12 +28,19 @@
         "pending",
         "approved",
         "delivered",
-        "cancelled "
+        "canceled"
       ],
       "default": "pending"
     },
     "total": {
       "type": "decimal"
+    },
+    "orderID": {
+      "type": "customField",
+      "options": {
+        "uuid-format": "^[A-F0-9]{12}$"
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
     }
   }
 }
