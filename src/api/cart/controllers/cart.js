@@ -100,6 +100,9 @@ module.exports = {
                     images: {
                       fields: ["url", "id"],
                     },
+                    poster: {
+                      fields: ["url", "id"],
+                    },
                   },
                 },
               },

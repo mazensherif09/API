@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_l_landings",
+  "info": {
+    "displayName": "landing"
+  },
+  "options": {},
+  "attributes": {
+    "state": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "poster": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

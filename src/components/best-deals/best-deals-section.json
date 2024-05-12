@@ -1,7 +1,8 @@
 {
   "collectionName": "components_best_deals_section",
   "info": {
-    "displayName": "BestDeals_section"
+    "displayName": "TopC_section",
+    "description": ""
   },
   "options": {},
   "attributes": {

@@ -1342,10 +1342,8 @@ export interface ApiShopShop extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    landing_slider: Attribute.Media & Attribute.Required;
-    sales_section: Attribute.Component<'sales-section.sales-section'>;
-    category_section: Attribute.Component<'categories.categories'>;
-    Best_Deals_section: Attribute.Component<'best-deals.b-d'>;
+    landing: Attribute.Component<'l.landing'>;
+    top_categories: Attribute.Component<'best-deals.best-deals-section'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

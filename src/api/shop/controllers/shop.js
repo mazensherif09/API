@@ -3,62 +3,32 @@ module.exports = {
     try {
       const shop = await strapi.entityService.findMany("api::shop.shop", {
         populate: {
-          landing_slider: {
-            fields: ["url"],
-          },
-          category_section: {
+          landing: {
             populate: {
-              categories: {
-                populate: {
-                  image: {
-                    fields: ["url", "id"],
-                  },
-                },
-                filters: {
-                  publishedAt: { $notNull: true },
-                },
+              poster: {
+                fields: ["url"],
               },
             },
-            filters: {
-              publish: true,
-            },
           },
-          sales_section: {
-            populate: {
-              salescards: {
-                populate: {
-                  icon: {
-                    fields: ["url", "id"],
-                  },
-                },
-              },
-            },
-            filters: {
-              publish: true,
-            },
-          },
-          Best_Deals_section: {
+          top_categories: {
             populate: {
               products: {
                 populate: {
                   images: {
-                    fields: ["url", "id"],
+                    fields: ["url"],
                   },
                   poster: {
-                    fields: ["url", "id"],
+                    fields: ["url"],
                   },
                 },
-                filters: {
-                  publishedAt: { $notNull: true },
-                },
-                start:0,
-                limit:15,
+                start: 0,
+                limit: 20,
               },
             },
           },
         },
       });
-      const newIn = await strapi.entityService.findMany("api::new-in.new-in");
+
       const sliderCards = await strapi.entityService.findMany(
         "api::product.product",
         {
@@ -76,7 +46,6 @@ module.exports = {
       );
       const data = {
         ...shop,
-        newIn,
         sliderCards,
       };
       return ctx.send(data);

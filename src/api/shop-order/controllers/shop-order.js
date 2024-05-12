@@ -29,17 +29,14 @@ module.exports = {
       if (!userCart || !userCart?.items?.length)
         return ctx.badRequest("Cart is emty");
       // 2  handle check qty for products in cart
-      let errorProducts = [];
-      userCart?.items?.map((item) => {
-        let isAvilblie = item?.product?.stock >= item.QTY;
-        if (!isAvilblie) errorProducts = [...errorProducts, item];
-      });
-      console.log("error products");
-      if (!!errorProducts.length)
+      let isAnyProductOutOfStaock = userCart?.items?.find(
+        (item) => item?.product?.stock >= item.QTY
+      );
+      if (isAnyProductOutOfStaock)
         return ctx.badRequest("out of stock", {
           message: "not avilblie",
           success: false,
-          details: errorProducts,
+          cart: userCart?.items,
         });
       // 3 calculate the total order
       let totalOrder = userCart?.items?.map((item) => {
@@ -99,14 +96,14 @@ module.exports = {
             items: {
               populate: {
                 product: {
-                  populate:{
+                  populate: {
                     images: {
                       fields: ["url", "id"],
                     },
                     poster: {
                       fields: ["url", "id"],
                     },
-                  }
+                  },
                 },
               },
             },
@@ -115,7 +112,7 @@ module.exports = {
             user: user?.id,
           },
           sort: { createdAt: "desc" },
-        }  
+        }
       );
 
       //3- check if there are any orders
@@ -124,7 +121,7 @@ module.exports = {
           message: "No orders found yet",
         });
       }
-      
+
       return ctx.send(orders);
     } catch (error) {
       return ctx.badRequest();

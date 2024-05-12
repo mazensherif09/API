@@ -12,31 +12,16 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "landing_slider": {
-      "type": "media",
-      "multiple": true,
-      "required": true,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "sales_section": {
-      "displayName": "sales_section",
+    "landing": {
+      "displayName": "landing",
       "type": "component",
       "repeatable": false,
-      "component": "sales-section.sales-section"
+      "component": "l.landing"
     },
-    "category_section": {
-      "displayName": "categories",
+    "top_categories": {
       "type": "component",
       "repeatable": false,
-      "component": "categories.categories"
-    },
-    "Best_Deals_section": {
-      "displayName": "B_D",
-      "type": "component",
-      "repeatable": false,
-      "component": "best-deals.b-d"
+      "component": "best-deals.best-deals-section"
     }
   }
 }

@@ -32,7 +32,7 @@ export interface AnalysisAnalysis extends Schema.Component {
 export interface BestDealsBD extends Schema.Component {
   collectionName: 'components_best_deals_b_ds';
   info: {
-    displayName: 'B_D';
+    displayName: 'T_C';
     description: '';
   };
   attributes: {
@@ -47,7 +47,8 @@ export interface BestDealsBD extends Schema.Component {
 export interface BestDealsBestDealsSection extends Schema.Component {
   collectionName: 'components_best_deals_section';
   info: {
-    displayName: 'BestDeals_section';
+    displayName: 'TopC_section';
+    description: '';
   };
   attributes: {
     products: Attribute.Relation<
@@ -139,6 +140,19 @@ export interface ItemsItems extends Schema.Component {
       'oneToOne',
       'api::product.product'
     >;
+  };
+}
+
+export interface LLanding extends Schema.Component {
+  collectionName: 'components_l_landings';
+  info: {
+    displayName: 'landing';
+  };
+  attributes: {
+    state: Attribute.String;
+    title: Attribute.String;
+    description: Attribute.Text;
+    poster: Attribute.Media;
   };
 }
 
@@ -289,6 +303,7 @@ declare module '@strapi/types' {
       'contact-us.contact-us': ContactUsContactUs;
       'data.data': DataData;
       'items.items': ItemsItems;
+      'l.landing': LLanding;
       'landing.landing': LandingLanding;
       'mts-info.mts-info': MtsInfoMtsInfo;
       'phases.phases': PhasesPhases;
