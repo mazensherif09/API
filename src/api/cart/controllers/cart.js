@@ -28,8 +28,10 @@ module.exports = {
         return val.product.id === item.product.id;
       });
       if (newItem) {
-        newItem.QTY = +item?.QTY === 0 ? 1 : +item?.QTY;
+        newItem.QTY =
+          +item?.QTY === 0 || !item?.QTY ? newItem?.QTY + 1 : +item?.QTY || 1;
       } else {
+        item.QTY = 1;
         userCart.items.push(item);
       }
       // step 4 : update user cart
@@ -110,6 +112,7 @@ module.exports = {
           },
         }
       );
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Delay for 2 seconds
       return ctx.send({
         data: newCart.items,
       });

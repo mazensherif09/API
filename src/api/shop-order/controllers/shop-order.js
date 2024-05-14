@@ -30,7 +30,7 @@ module.exports = {
         return ctx.badRequest("Cart is emty");
       // 2  handle check qty for products in cart
       let isAnyProductOutOfStaock = userCart?.items?.find(
-        (item) => item?.product?.stock >= item.QTY
+        (item) => item?.product?.stock < item.QTY
       );
       if (isAnyProductOutOfStaock)
         return ctx.badRequest("out of stock", {
