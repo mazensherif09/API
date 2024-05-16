@@ -29,7 +29,7 @@ module.exports = {
       );
       if (!Newproduct) return ctx.badRequest("Product not found");
       const newItem = userCart?.items?.find((val) => {
-        return val.product.id === item.product.id;
+        return val?.product?.id === item?.product?.id;
       });
       if (newItem) {
         newItem.QTY =
@@ -69,6 +69,7 @@ module.exports = {
         data: newCart.items,
       });
     } catch (error) {
+      console.log("🚀 ~ addItemToCartAPI: ~ error:", error)
       return ctx.badRequest(error);
     }
   },
