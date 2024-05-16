@@ -17,7 +17,7 @@ const handleMerageCartItems = (item1, item2) => {
   });
 
   array.forEach((val, ind) => {
-    val.product = val?.product?.id;
+    val.product = val?.product?.id || null;
     delete val["id"];
   });
   return array;
@@ -35,8 +35,7 @@ const handleproductIsAvailable = async (items) => {
     if (product) {
       val.product = product;
     } else {
-      // dalete item
-      items.splice(ind, 1);
+      val.product = null;
     }
   });
   return items;

@@ -125,6 +125,7 @@ export interface ItemsItems extends Schema.Component {
   collectionName: 'components_items_items';
   info: {
     displayName: 'items';
+    description: '';
   };
   attributes: {
     QTY: Attribute.Integer &

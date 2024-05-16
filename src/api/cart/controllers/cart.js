@@ -25,7 +25,7 @@ module.exports = {
       // step 2 : check if new item is already in cart or not and check QTY
       const Newproduct = await strapi.entityService.findOne(
         "api::product.product",
-        item.product.id
+        item?.product?.id
       );
       if (!Newproduct) return ctx.badRequest("Product not found");
       const newItem = userCart?.items?.find((val) => {
@@ -60,13 +60,7 @@ module.exports = {
                   },
                 },
               },
-              filters: {
-                product: {
-                  id: {
-                    $notNull: true,
-                  },
-                },
-              }
+
             },
           },
         }
@@ -81,7 +75,7 @@ module.exports = {
   removeItemFromCart: async (ctx) => {
     try {
       const { user } = ctx.state;
-      const { item } = ctx.request.body;
+      const { id } = ctx.request.body;
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
         populate: {
@@ -96,7 +90,7 @@ module.exports = {
       });
 
       userCart.items = userCart.items.filter((val) => {
-        return val.product.id !== item.product.id;
+        return val?.id !== id;
       });
       const newCart = await strapi.entityService.update(
         "api::cart.cart",
@@ -119,13 +113,6 @@ module.exports = {
                   },
                 },
               },
-              filters: {
-                product: {
-                  id: {
-                    $notNull: true,
-                  },
-                },
-              }
             },
           },
         }
@@ -135,7 +122,7 @@ module.exports = {
         data: newCart.items,
       });
     } catch (error) {
-      console.log("🚀 ~ removeItemFromCart: ~ error:", error)
+      console.log("🚀 ~ removeItemFromCart: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
@@ -186,13 +173,6 @@ module.exports = {
                 },
               },
             },
-            where: {
-              product: {
-                id: {
-                  $notNull: true,
-                },
-              },
-            },
           },
         },
       });
@@ -237,13 +217,6 @@ module.exports = {
                   },
                 },
               },
-              filters: {
-                product: {
-                  id: {
-                    $notNull: true,
-                  },
-                },
-              }
             },
           },
         });
@@ -272,13 +245,6 @@ module.exports = {
                   poster: {
                     select: ["url", "id"],
                   },
-                },
-              },
-            },
-            where: {
-              product: {
-                id: {
-                  $notNull: true,
                 },
               },
             },
