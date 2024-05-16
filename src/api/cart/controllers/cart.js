@@ -1,4 +1,8 @@
-const removeFieldFromArray = require("../services/cart");
+const {
+  removeFieldFromArray,
+  handleMerageCartItems,
+  handleproductIsAvailable,
+} = require("../services/cart");
 module.exports = {
   addItemToCartAPI: async (ctx) => {
     try {
@@ -112,7 +116,7 @@ module.exports = {
           },
         }
       );
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Delay for 2 seconds
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 2 seconds
       return ctx.send({
         data: newCart.items,
       });
@@ -191,18 +195,12 @@ module.exports = {
           },
         });
       } else {
-        const compareObjects = (obj1, obj2) => {
-          return obj1.product?.id === obj2.product?.id;
-        }; // for compare spafic field in object
-        let newI = [...items, ...cart.items].filter(
-          (obj, index, arr) =>
-            arr.findIndex((innerObj) => compareObjects(innerObj, obj)) === index
-        ); // for handle marge items and handle duplicate items
-        removeFieldFromArray(newI, "id"); // for handle remove id from array but id of items not id of products !
-        // because id of items make conflict with database table
+        let loaclItems = await handleproductIsAvailable(items);
+        let allItems = handleMerageCartItems(loaclItems, cart?.items);
+        console.log("🚀 ~ connectCart: ~ allItems:", loaclItems);
         cart = await strapi.entityService.update("api::cart.cart", cart?.id, {
           data: {
-            items: newI,
+            items: allItems,
           },
           populate: {
             items: {
@@ -218,6 +216,7 @@ module.exports = {
                   },
                 },
               },
+              
             },
           },
         });
@@ -249,6 +248,7 @@ module.exports = {
                 },
               },
             },
+          
           },
         },
       });
@@ -257,6 +257,7 @@ module.exports = {
         data: cart.items,
       });
     } catch (error) {
+      console.log("🚀 ~ refetchCart: ~ error:", error)
       return ctx.badRequest(error);
     }
   },
