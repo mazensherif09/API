@@ -10664,7 +10664,7 @@ strapi-advanced-uuid@^1.3.0:
 
 strapi-auto-uuid@^0.0.8:
   version "0.0.8"
-  resolved "https://registry.npmjs.org/strapi-auto-uuid/-/strapi-auto-uuid-0.0.8.tgz"
+  resolved "https://registry.yarnpkg.com/strapi-auto-uuid/-/strapi-auto-uuid-0.0.8.tgz#2985e3b803c0592b0d851bf7b3162aa7e0ecf2f0"
   integrity sha512-MHwvnM/nwj16BDjimUXmH8CVaxuDAu6Le0j7tJJos31CrqSdZRgRYwn7iN93U/i6fqnl6/2LdSoNoZVqe5lWAQ==
   dependencies:
     uuid "^9.0.0"
