@@ -60,6 +60,13 @@ module.exports = {
                   },
                 },
               },
+              filters: {
+                product: {
+                  id: {
+                    $notNull: true,
+                  },
+                },
+              }
             },
           },
         }
@@ -112,6 +119,13 @@ module.exports = {
                   },
                 },
               },
+              filters: {
+                product: {
+                  id: {
+                    $notNull: true,
+                  },
+                },
+              }
             },
           },
         }
@@ -121,6 +135,7 @@ module.exports = {
         data: newCart.items,
       });
     } catch (error) {
+      console.log("🚀 ~ removeItemFromCart: ~ error:", error)
       return ctx.badRequest(error);
     }
   },
@@ -171,6 +186,13 @@ module.exports = {
                 },
               },
             },
+            where: {
+              product: {
+                id: {
+                  $notNull: true,
+                },
+              },
+            },
           },
         },
       });
@@ -197,7 +219,6 @@ module.exports = {
       } else {
         let loaclItems = await handleproductIsAvailable(items);
         let allItems = handleMerageCartItems(loaclItems, cart?.items);
-        console.log("🚀 ~ connectCart: ~ allItems:", loaclItems);
         cart = await strapi.entityService.update("api::cart.cart", cart?.id, {
           data: {
             items: allItems,
@@ -216,7 +237,13 @@ module.exports = {
                   },
                 },
               },
-              
+              filters: {
+                product: {
+                  id: {
+                    $notNull: true,
+                  },
+                },
+              }
             },
           },
         });
@@ -248,7 +275,13 @@ module.exports = {
                 },
               },
             },
-          
+            where: {
+              product: {
+                id: {
+                  $notNull: true,
+                },
+              },
+            },
           },
         },
       });
@@ -257,7 +290,7 @@ module.exports = {
         data: cart.items,
       });
     } catch (error) {
-      console.log("🚀 ~ refetchCart: ~ error:", error)
+      console.log("🚀 ~ refetchCart: ~ error:", error);
       return ctx.badRequest(error);
     }
   },
