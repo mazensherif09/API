@@ -118,7 +118,7 @@ module.exports = {
           },
         }
       );
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 2 seconds
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
       return ctx.send({
         data: newCart.items,
       });

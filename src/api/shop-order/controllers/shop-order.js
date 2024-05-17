@@ -30,8 +30,8 @@ module.exports = {
         return ctx.badRequest("Cart is emty");
       // 2  handle check qty for products in cart
       let isAnyProductOutOfStaock = userCart?.items?.find(
-        (item) =>  item?.product?.stock < item.QTY || !item?.product?.id
-      )
+        (item) => item?.product?.stock < item.QTY || !item?.product?.id
+      );
       if (isAnyProductOutOfStaock)
         return ctx.badRequest("out of stock", {
           message: "not avilblie",
@@ -132,12 +132,10 @@ module.exports = {
       //1- get all the records
       const { user } = ctx.state;
       let { orderID } = ctx.request.query;
-      if (!orderID) return ctx.send({message: "No order found"});
-
 
       //2-Get Order by ID
       let order = await strapi.db.query("api::shop-order.shop-order").findOne({
-        where: {orderID},
+        where: { orderID, user: user?.id },
         populate: {
           items: {
             populate: {
@@ -155,10 +153,11 @@ module.exports = {
           },
         },
       });
-
+      if (!order) return ctx.send({ message: "No order found" });
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
       return ctx.send(order);
     } catch (error) {
       return ctx.badRequest();
     }
-  }
+  },
 };
