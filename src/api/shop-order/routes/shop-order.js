@@ -12,6 +12,12 @@ module.exports = {
         handler: "shop-order.findMany",
         
       },
+      {
+        method: "GET",
+        path: "/shop/order",
+        handler: "shop-order.findOne",
+        
+      },
     ],
   };
   

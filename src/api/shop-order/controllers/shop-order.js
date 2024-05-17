@@ -127,4 +127,38 @@ module.exports = {
       return ctx.badRequest();
     }
   },
+  findOne: async (ctx) => {
+    try {
+      //1- get all the records
+      const { user } = ctx.state;
+      let { orderID } = ctx.request.query;
+      if (!orderID) return ctx.send({message: "No order found"});
+
+
+      //2-Get Order by ID
+      let order = await strapi.db.query("api::shop-order.shop-order").findOne({
+        where: {orderID},
+        populate: {
+          items: {
+            populate: {
+              product: {
+                populate: {
+                  images: {
+                    fields: ["url", "id"],
+                  },
+                  poster: {
+                    fields: ["url", "id"],
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      return ctx.send(order);
+    } catch (error) {
+      return ctx.badRequest();
+    }
+  }
 };
