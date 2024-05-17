@@ -14,7 +14,7 @@ module.exports = {
       },
       {
         method: "GET",
-        path: "/shop/order",
+        path: "/shop/orders/:id",
         handler: "shop-order.findOne",
         
       },

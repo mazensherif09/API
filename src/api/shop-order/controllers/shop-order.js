@@ -129,13 +129,10 @@ module.exports = {
   },
   findOne: async (ctx) => {
     try {
-      //1- get all the records
       const { user } = ctx.state;
-      let { orderID } = ctx.request.query;
-
-      //2-Get Order by ID
+      let { id } = ctx.request.params;
       let order = await strapi.db.query("api::shop-order.shop-order").findOne({
-        where: { orderID, user: user?.id },
+        where: { orderID:id, user: user?.id },
         populate: {
           items: {
             populate: {
