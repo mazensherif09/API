@@ -41,6 +41,12 @@
         "uuid-format": "^[A-F0-9]{12}$"
       },
       "customField": "plugin::strapi-advanced-uuid.uuid"
+    },
+    "nationality": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
     }
   }
 }

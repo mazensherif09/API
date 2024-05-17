@@ -779,7 +779,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'api::user-token-balance.user-token-balance'
     >;
     uuid: Attribute.UID & Attribute.CustomField<'plugin::field-uuid.uuid'>;
-    adderss: Attribute.String;
+    address: Attribute.String;
     sessionResetPassword: Attribute.BigInteger;
     OTP: Attribute.BigInteger;
     lastdateResetPassword: Attribute.BigInteger;
@@ -1390,6 +1390,8 @@ export interface ApiShopOrderShopOrder extends Schema.CollectionType {
           'uuid-format': '^[A-F0-9]{12}$';
         }
       >;
+    nationality: Attribute.String;
+    address: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

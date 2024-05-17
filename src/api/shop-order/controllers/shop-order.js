@@ -128,30 +128,34 @@ module.exports = {
   },
   findOne: async (ctx) => {
     try {
-      const { user } = ctx.state;
-      let { id } = ctx.request.params;
-      let order = await strapi.db.query("api::shop-order.shop-order").findOne({
-        where: { orderID:id, user: user?.id },
-        populate: {
-          items: {
-            populate: {
-              product: {
-                populate: {
-                  images: {
-                    fields: ["url", "id"],
-                  },
-                  poster: {
-                    fields: ["url", "id"],
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
-      if (!order) return ctx.send({ message: "No order found" });
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
-      return ctx.send(order);
+       //Step(1) get all the records
+       const { user } = ctx.state;
+       let { id } = ctx.request.params;
+ 
+       //Step(2) get the order user by id and orderID
+       let order = await strapi.db.query("api::shop-order.shop-order").findOne({
+         where: { orderID:id, user: user?.id },
+         populate: {
+           items: {
+             populate: {
+               product: {
+                 populate: {
+                   images: {
+                     fields: ["url", "id"],
+                   },
+                   poster: {
+                     fields: ["url", "id"],
+                   },
+                 },
+               },
+             },
+           },
+         },
+       });
+ 
+       if (!order) return ctx.send({ message: "No order found" });
+       await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
+       return ctx.send(order);
     } catch (error) {
       return ctx.badRequest();
     }
