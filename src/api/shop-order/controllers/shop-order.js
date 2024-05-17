@@ -1,7 +1,6 @@
 const { handlePage } = require("../../../utils/handleQuery");
 
 module.exports = {
-  //start enpoints for users
   create: async (ctx) => {
     try {
       const { user } = ctx.state;
