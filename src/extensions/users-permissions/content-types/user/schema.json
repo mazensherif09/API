@@ -90,7 +90,7 @@
       "type": "customField",
       "customField": "plugin::field-uuid.uuid"
     },
-    "adderss": {
+    "address": {
       "type": "string"
     },
     "sessionResetPassword": {

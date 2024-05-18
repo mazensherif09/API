@@ -5,6 +5,7 @@ module.exports = {
   create: async (ctx) => {
     try {
       const { user } = ctx.state;
+      const { address, nationality } = ctx.request.body;
       // step 1:1 get user cart
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
@@ -36,6 +37,8 @@ module.exports = {
             user: user?.id,
             items: userCart?.items,
             total: totalOrder,
+            nationality,
+            address,
           },
         }
       );
@@ -94,12 +97,16 @@ module.exports = {
   },
   findOne: async (ctx) => {
     try {
+      //Step(1) get all the records
       const { user } = ctx.state;
       let { id } = ctx.request.params;
+
+      //Step(2) get the order user by id and orderID
       let order = await strapi.db.query("api::shop-order.shop-order").findOne({
         where: { orderID: id, user: user?.id },
         populate: cartPopulate(),
       });
+
       if (!order) return ctx.send({ message: "No order found" });
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
       return ctx.send(order);
