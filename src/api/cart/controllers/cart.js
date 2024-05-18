@@ -1,3 +1,4 @@
+const { cartPopulate } = require("../../../utils/handlePopulate");
 const {
   removeFieldFromArray,
   handleMerageCartItems,
@@ -46,30 +47,13 @@ module.exports = {
           data: {
             items: userCart.items,
           },
-          populate: {
-            items: {
-              populate: {
-                product: {
-                  populate: {
-                    images: {
-                      fields: ["url", "id"],
-                    },
-                    poster: {
-                      fields: ["url", "id"],
-                    },
-                  },
-                },
-              },
-
-            },
-          },
+          populate: cartPopulate(),
         }
       );
       return ctx.send({
         data: newCart.items,
       });
     } catch (error) {
-      console.log("🚀 ~ addItemToCartAPI: ~ error:", error)
       return ctx.badRequest(error);
     }
   },
@@ -134,7 +118,7 @@ module.exports = {
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
       });
-      console.log("step 2");
+      
       if (!userCart) return ctx.badRequest("Cart not found");
       const newCart = await strapi.entityService.update(
         "api::cart.cart",
@@ -145,7 +129,7 @@ module.exports = {
           },
         }
       );
-      console.log("step 3");
+  
       return ctx.send({
         data: [],
       });
@@ -160,22 +144,7 @@ module.exports = {
       removeFieldFromArray(items, "id"); // for handle remove id from array but id of items not id of products !
       let cart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user?.id },
-        populate: {
-          items: {
-            populate: {
-              product: {
-                populate: {
-                  images: {
-                    select: ["url", "id"],
-                  },
-                  poster: {
-                    select: ["url", "id"],
-                  },
-                },
-              },
-            },
-          },
-        },
+        populate: cartPopulate(),
       });
       if (!cart) {
         cart = await strapi.entityService.create("api::cart.cart", {
@@ -183,19 +152,7 @@ module.exports = {
             user: user?.id,
             items,
           },
-          populate: {
-            items: {
-              populate: {
-                product: {
-                  populate: {
-                    images: {
-                      fields: ["url", "id"],
-                    },
-                  },
-                },
-              },
-            },
-          },
+          populate: cartPopulate(),
         });
       } else {
         let loaclItems = await handleproductIsAvailable(items);
@@ -235,29 +192,13 @@ module.exports = {
       const { user } = ctx.state;
       let cart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
-        populate: {
-          items: {
-            populate: {
-              product: {
-                populate: {
-                  images: {
-                    select: ["url", "id"],
-                  },
-                  poster: {
-                    select: ["url", "id"],
-                  },
-                },
-              },
-            },
-          },
-        },
+        populate: cartPopulate(),
       });
       if (!cart) ctx.send({ data: [] });
       return ctx.send({
         data: cart.items,
       });
     } catch (error) {
-      console.log("🚀 ~ refetchCart: ~ error:", error);
       return ctx.badRequest(error);
     }
   },

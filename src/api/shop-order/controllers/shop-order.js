@@ -1,3 +1,4 @@
+const { cartPopulate } = require("../../../utils/handlePopulate");
 const { handlePage } = require("../../../utils/handleQuery");
 
 module.exports = {
@@ -7,22 +8,7 @@ module.exports = {
       // step 1:1 get user cart
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
-        populate: {
-          items: {
-            populate: {
-              product: {
-                populate: {
-                  images: {
-                    fields: ["url", "id"],
-                  },
-                  poster: {
-                    fields: ["url", "id"],
-                  },
-                },
-              },
-            },
-          },
-        },
+        populate: cartPopulate(),
       });
       // 1:2  handle error cases
       if (!userCart || !userCart?.items?.length)
@@ -82,45 +68,25 @@ module.exports = {
     try {
       //1- get all the records
       const { user } = ctx.state;
-      let { page } = ctx.request.query;
-      if (!page) page = 1;
-
       //2- get orders related to the current user
       let orders = await strapi.entityService.findPage(
         "api::shop-order.shop-order",
         {
-          page: +page,
+          page: handlePage(ctx?.request?.query?.page),
           pageSize: 20,
-          populate: {
-            items: {
-              populate: {
-                product: {
-                  populate: {
-                    images: {
-                      fields: ["url", "id"],
-                    },
-                    poster: {
-                      fields: ["url", "id"],
-                    },
-                  },
-                },
-              },
-            },
-          },
+          populate: cartPopulate(),
           filters: {
             user: user?.id,
           },
           sort: { createdAt: "desc" },
         }
       );
-
       //3- check if there are any orders
       if (!orders) {
         return ctx.send({
           message: "No orders found yet",
         });
       }
-
       return ctx.send(orders);
     } catch (error) {
       return ctx.badRequest();
@@ -131,23 +97,8 @@ module.exports = {
       const { user } = ctx.state;
       let { id } = ctx.request.params;
       let order = await strapi.db.query("api::shop-order.shop-order").findOne({
-        where: { orderID:id, user: user?.id },
-        populate: {
-          items: {
-            populate: {
-              product: {
-                populate: {
-                  images: {
-                    fields: ["url", "id"],
-                  },
-                  poster: {
-                    fields: ["url", "id"],
-                  },
-                },
-              },
-            },
-          },
-        },
+        where: { orderID: id, user: user?.id },
+        populate: cartPopulate(),
       });
       if (!order) return ctx.send({ message: "No order found" });
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
