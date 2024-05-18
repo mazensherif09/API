@@ -64,7 +64,11 @@ module.exports = {
         message: "success",
       });
     } catch (error) {
-      return ctx.badRequest(error);
+      return ctx.badRequest({
+        message: "some error occured",
+        success: false,
+        error,
+      });
     }
   },
   findMany: async (ctx) => {
@@ -92,7 +96,11 @@ module.exports = {
       }
       return ctx.send(orders);
     } catch (error) {
-      return ctx.badRequest();
+      return ctx.badRequest({
+        message: "No orders found yet",
+        success: false,
+        error,
+      });
     }
   },
   findOne: async (ctx) => {
