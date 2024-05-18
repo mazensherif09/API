@@ -23,6 +23,7 @@ module.exports = {
           },
         },
       });
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for 2 seconds
       if (!product) return ctx.notFound();
       return ctx.send(product);
     } catch (error) {
@@ -59,7 +60,7 @@ module.exports = {
           filters,
         }
       );
-      if (!products) return ctx.notFound();
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
       return ctx.send(products);
     } catch (error) {
       console.log("🚀 ~ findMany: ~ error:", error);

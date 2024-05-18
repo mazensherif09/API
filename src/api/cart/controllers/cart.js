@@ -118,7 +118,7 @@ module.exports = {
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
       });
-      
+
       if (!userCart) return ctx.badRequest("Cart not found");
       const newCart = await strapi.entityService.update(
         "api::cart.cart",
@@ -129,7 +129,7 @@ module.exports = {
           },
         }
       );
-  
+
       return ctx.send({
         data: [],
       });

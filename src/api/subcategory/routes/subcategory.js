@@ -2,7 +2,7 @@ module.exports = {
   routes: [
     {
       method: "GET",
-      path: "/api/category/:slug/subcategories",
+      path: "/category/:slug/subcategories",
       handler: "subcategory.getSubCategories",
     },
   ],
