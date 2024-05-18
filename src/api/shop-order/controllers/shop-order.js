@@ -5,7 +5,7 @@ module.exports = {
   create: async (ctx) => {
     try {
       const { user } = ctx.state;
-      const { address, nationality } = ctx.request.body;
+      const { address, nationality, government } = ctx.request.body;
       // step 1:1 get user cart
       const userCart = await strapi.db.query("api::cart.cart").findOne({
         where: { user: user.id },
@@ -39,6 +39,7 @@ module.exports = {
             total: totalOrder,
             nationality,
             address,
+            government
           },
         }
       );

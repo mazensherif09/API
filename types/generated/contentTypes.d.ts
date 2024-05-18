@@ -1392,6 +1392,7 @@ export interface ApiShopOrderShopOrder extends Schema.CollectionType {
       >;
     nationality: Attribute.String;
     address: Attribute.String;
+    government: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
