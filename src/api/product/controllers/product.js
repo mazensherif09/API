@@ -9,7 +9,7 @@ const { handlePrice } = require("../services/product");
 module.exports = {
   findOne: async (ctx) => {
     try {
-      const {slug} = ctx.request.params;
+      const { slug } = ctx.request.params;
       if (!slug) return ctx.badRequest();
 
       let product = await strapi.db.query("api::product.product").findOne({
@@ -29,9 +29,8 @@ module.exports = {
       return ctx.badRequest();
     }
   },
-  //start enpoints for users
   findMany: async (ctx) => {
-    try {      
+    try {
       const query = convertCommaSeparatedValues({ ...ctx?.request?.query }, [
         "page",
       ]);
@@ -56,7 +55,7 @@ module.exports = {
             category: true,
             subcategory: true,
           },
-         // @ts-ignore
+          // @ts-ignore
           filters,
         }
       );
