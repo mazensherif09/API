@@ -50,9 +50,7 @@ module.exports = {
           populate: cartPopulate(),
         }
       );
-      return ctx.send({
-        data: newCart.items,
-      });
+      return ctx.send(newCart?.items);
     } catch (error) {
       return ctx.badRequest(error);
     }
@@ -103,9 +101,7 @@ module.exports = {
         }
       );
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
-      return ctx.send({
-        data: newCart.items,
-      });
+      return ctx.send(newCart?.items);
     } catch (error) {
       console.log("🚀 ~ removeItemFromCart: ~ error:", error);
       return ctx.badRequest(error);
@@ -130,9 +126,7 @@ module.exports = {
         }
       );
 
-      return ctx.send({
-        data: [],
-      });
+      return ctx.send([]);
     } catch (error) {
       return ctx.badRequest(error);
     }
@@ -179,9 +173,7 @@ module.exports = {
           },
         });
       }
-      return ctx.send({
-        data: cart.items,
-      });
+      return ctx.send(cart?.items);
     } catch (error) {
       console.log("🚀 ~ connectCart: ~ error:", error);
       return ctx.badRequest(error);
@@ -194,10 +186,8 @@ module.exports = {
         where: { user: user.id },
         populate: cartPopulate(),
       });
-      if (!cart) ctx.send({ data: [] });
-      return ctx.send({
-        data: cart.items,
-      });
+      if (!cart) ctx.send([]);
+      return ctx.send(cart?.items);
     } catch (error) {
       return ctx.badRequest(error);
     }
