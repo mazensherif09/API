@@ -11,7 +11,7 @@ module.exports = {
         );
         let data = [];
         if (result) data = [...result?.pages];
-        return ctx.send({ data });
+        return ctx.send( data );
       } catch (error) {
         
         return ctx.badRequest(error);
@@ -21,7 +21,7 @@ module.exports = {
       try {
         const copyrights =
           (await strapi.service("api::presale.presale").copyRight()) || {};
-        if (!copyrights?.status) return ctx.badRequest("your get blockd");
+        if (!copyrights?.status) return ctx.badRequest("your get blocked");
         return ctx.send({ hasWarnning: ctx.hasWarnning, message: "boundary ok" });
       } catch (error) {
         return ctx.badRequest(error);

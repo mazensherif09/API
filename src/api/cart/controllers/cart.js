@@ -100,7 +100,6 @@ module.exports = {
           },
         }
       );
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
       return ctx.send(newCart?.items);
     } catch (error) {
       console.log("🚀 ~ removeItemFromCart: ~ error:", error);
@@ -173,6 +172,8 @@ module.exports = {
           },
         });
       }
+
+      // await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for 2 seconds
       return ctx.send(cart?.items);
     } catch (error) {
       console.log("🚀 ~ connectCart: ~ error:", error);

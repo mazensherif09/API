@@ -113,11 +113,11 @@ module.exports = (plugin) => {
       });
       return ctx.send({
         status: 200,
-        message: "log in successfully",
+        message: `hello ${user?.username}`,
         jwt: token,
       });
     } catch (error) {
-      console.log("🚀 ~ plugin.controllers.user.signIn= ~ error:", error)
+      
       return ctx.badRequest(error);
     }
   };

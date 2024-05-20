@@ -116,7 +116,6 @@ module.exports = {
       });
 
       if (!order) return ctx.send({ message: "No order found" });
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
       return ctx.send(order);
     } catch (error) {
       return ctx.badRequest({

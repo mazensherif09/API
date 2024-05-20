@@ -9,8 +9,7 @@ const { handlePrice } = require("../services/product");
 module.exports = {
   findOne: async (ctx) => {
     try {
-      const { slug } = ctx.request.params;
-      if (!slug) return ctx.badRequest();
+      const { slug='cdsv' } = ctx?.request?.params;
 
       let product = await strapi.db.query("api::product.product").findOne({
         where: { slug },
@@ -23,8 +22,13 @@ module.exports = {
           },
         },
       });
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for 2 seconds
-      if (!product) return ctx.notFound();
+      if (!product) return ctx.notFound(
+        "No product found",
+        {
+          message: "No product found",
+          success: false
+        }
+      );
       return ctx.send(product);
     } catch (error) {
       return ctx.badRequest();
@@ -60,7 +64,6 @@ module.exports = {
           filters,
         }
       );
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 seconds
       return ctx.send(products);
     } catch (error) {
       console.log("🚀 ~ findMany: ~ error:", error);
