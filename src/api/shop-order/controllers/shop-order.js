@@ -13,20 +13,20 @@ module.exports = {
       });
       // 1:2  handle error cases
       if (!userCart || !userCart?.items?.length)
-        return ctx.badRequest("Cart is emty");
+        return ctx.badRequest("Cart is empty");
       // 2  handle check qty for products in cart
       let isAnyProductOutOfStaock = userCart?.items?.find(
         (item) => item?.product?.stock < item.QTY || !item?.product?.id
       );
       if (isAnyProductOutOfStaock)
         return ctx.badRequest("out of stock", {
-          message: "not avilblie",
+          message: "not available",
           success: false,
           cart: userCart?.items,
         });
       // 3 calculate the total order
       let totalOrder = userCart?.items?.map((item) => {
-        return item.product.price * item.QTY;
+        return item?.product?.price * item?.QTY;
       }); // handle calc qty
       totalOrder = totalOrder?.reduce((a, b) => a + b, 0); // calc final total
       // 4 create order
@@ -44,7 +44,7 @@ module.exports = {
         }
       );
       // 5 update user cart
-      const newCart = await strapi.entityService.update(
+       await strapi.entityService.update(
         "api::cart.cart",
         userCart.id,
         {
@@ -54,10 +54,10 @@ module.exports = {
         }
       );
       // 6 subtract qty from products
-      userCart?.items?.map((item) => {
-        strapi.entityService.update("api::product.product", item.product.id, {
+      userCart?.items?.map(async (item) => {
+       await strapi.entityService.update("api::product.product", item?.product?.id, {
           data: {
-            stock: item.product.stock - item.QTY,
+            stock: item?.product?.stock - item?.QTY,
           },
         });
       });
